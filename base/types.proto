@@ -8,7 +8,7 @@ import "validate/validate.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "errors/errors.proto";
 
-option go_package = "git.gkxi.top/apk/apk-plugin/api/base;base";
+option go_package = "github.com/gkxi/api/base;base";
 
 enum ChainType {
   TypeBitcoin = 0;

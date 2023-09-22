@@ -1,4 +1,4 @@
-module git.gkxi.top/apk/apk-plugin/api
+module github.com/gkxi/api
 
 go 1.19
 

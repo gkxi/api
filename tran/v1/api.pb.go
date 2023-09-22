@@ -7,7 +7,7 @@
 package v1
 
 import (
-	_ "git.gkxi.top/apk/apk-plugin/api/base"
+	_ "github.com/gkxi/api/base"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	_ "github.com/go-kratos/kratos/v2/errors"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
