@@ -1,0 +1,258 @@
+syntax = "proto3";
+
+package tran.v1;
+
+import "base/types.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "errors/errors.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "git.gkxi.top/apk/apk-plugin/api/tran/v1;v1";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "信息服务文档";
+		version: "1.0";
+	};
+	schemes: HTTP;
+	schemes: HTTPS;
+	consumes: "application/json";
+	consumes: "application/x-foo-mime";
+	produces: "application/json";
+	produces: "application/x-foo-mime";
+	security_definitions: {
+		security: {
+			key: "BasicAuth";
+			value: {
+				type: TYPE_BASIC;
+			}
+		}
+	}
+	responses: {
+		key: "500";
+		value: {
+			description: "Server error";
+			headers: {
+				key: "X-Correlation-Id"
+				value: {
+					description: "Unique event identifier for server requests"
+					type: "string"
+					format: "uuid"
+					default: "\"2438ac3c-37eb-4902-adef-ed16b4431030\""
+					pattern: "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"
+				}
+			};
+			schema: {
+				json_schema: {
+					ref: ".errors.Error"
+				}
+			}
+		}
+	}
+};
+
+service TranV1 {
+	option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+		description: "btc API接口"
+	};
+	rpc ChainList (ChainListRequest) returns (ChainListReply) {
+		option (google.api.http) = {
+			post: "/chain/list/{chainCode}"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "余额";
+		};
+	};
+	rpc Height (HeightRequest) returns (HeightReply) {
+		option (google.api.http) = {
+			post: "/chain/getLastBlockHeight"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "余额";
+		};
+	};
+	rpc IsMultiSigAddress (IsMultiSigAddressRequest) returns (IsMultiSigAddressReply) {
+		option (google.api.http) = {
+			post: "/chain/multisig"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "余额";
+		};
+	};
+	rpc Balance (BalanceRequest) returns (BalanceReply) {
+		option (google.api.http) = {
+			post: "/chain/getBalance"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "余额";
+		};
+	};
+	rpc SendTran (SendTranRequest) returns (SendTranReply) {
+		option (google.api.http) = {
+			post: "/chain/transferTo"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "发送交易";
+		};
+	};
+	rpc GetBlockHashByHeight (GetBlockHashByHeightRequest) returns (GetBlockHashByHeightReply) {
+		option (google.api.http) = {
+			post: "/chain/getBlockHashByHeight/{height}"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "发送交易";
+		};
+	};
+	rpc GetBlockHashByHeightEth (GetBlockHashByHeightRequest) returns (TxResult) {
+		option (google.api.http) = {
+			post: "/chain/getBlockHashByHeightEth/{height}"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "发送交易";
+		};
+	};
+	rpc GetBlockHashByHeightBtc (GetBlockHashByHeightRequest) returns (TxUtxo) {
+		option (google.api.http) = {
+			post: "/chain/getBlockHashByHeightBtc/{height}"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "发送交易";
+		};
+	};
+}
+
+message ChainListRequest {
+	string chainCode = 1;
+}
+
+message ChainListResult {
+	string chainCode = 1;
+	string code = 2;
+	string contractAddress = 3;
+}
+
+message ChainListReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	repeated ChainListResult data = 4;
+}
+
+message HeightRequest {}
+message HeightReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	uint64 data = 4;
+}
+
+message IsMultiSigAddressRequest {
+	string walletAddress = 1 [(validate.rules).string.min_len = 2];
+}
+
+message IsMultiSigAddressReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	bool data = 4;
+}
+
+message BalanceRequest {
+	string walletAddress = 1 [(validate.rules).string.min_len = 2];
+	string contractAddress = 2;
+}
+message BalanceResult {
+	string balance = 1;
+	bool multisig = 2;
+}
+
+message BalanceReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	BalanceResult data = 4;
+}
+
+message SendTranRequest {
+	string mnemonic = 1;
+	string privKey = 2;
+	string from = 3;
+	string to = 4;
+	string contractAddress = 5;
+	string value = 6;
+	string objectId = 7;
+}
+message  SendTranResult {
+	string hash = 1;
+	string msg = 2;
+}
+message SendTranReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	SendTranResult data = 4;
+}
+
+message GetBlockHashByHeightRequest {
+	string height = 1;
+}
+message TxResult {
+	string hash = 1;
+	string from = 2;
+	string to = 3;
+	bool tokenTransaction = 4;
+	string contractAddress = 5;
+	bool status = 6;
+	string value = 7;
+	string fee = 9;
+	int64 date = 10;
+}
+
+message Utxo {
+	string value = 1;
+	repeated string address = 2;
+	bool isAddress = 3;
+}
+
+message TxUtxo {
+	string hash = 1;
+	repeated Utxo from = 2;
+	repeated Utxo to = 3;
+	bool status = 6;
+	string fee = 9;
+	int64 date = 10;
+}
+
+message BalanceChanges {
+	string owner = 1;
+	string coinType = 2;
+	string amount = 3;
+}
+
+message TxBalance {
+	string hash = 1;
+	repeated BalanceChanges balanceChanges = 2;
+}
+
+message BlockResult {
+	string hash = 1;
+	int64 height = 2;
+	repeated google.protobuf.Any txs = 3;
+	string nextCursor = 4;
+}
+message GetBlockHashByHeightReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	BlockResult data = 4;
+}

@@ -1,0 +1,508 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /chain/createAddressByMnemonic:
+        post:
+            tags:
+                - AddressV1
+            operationId: AddressV1_NewBip44
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NewBip44Request'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/NewBip44Reply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/getBalance:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_Balance
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BalanceRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BalanceReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/getBlockHashByHeight/{height}:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_GetBlockHashByHeight
+            parameters:
+                - name: height
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GetBlockHashByHeightRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetBlockHashByHeightReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/getBlockHashByHeightBtc/{height}:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_GetBlockHashByHeightBtc
+            parameters:
+                - name: height
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GetBlockHashByHeightRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TxUtxo'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/getBlockHashByHeightEth/{height}:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_GetBlockHashByHeightEth
+            parameters:
+                - name: height
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GetBlockHashByHeightRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TxResult'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/getLastBlockHeight:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_Height
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/HeightRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HeightReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/list/{chainCode}:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_ChainList
+            parameters:
+                - name: chainCode
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ChainListRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ChainListReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/multisig:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_IsMultiSigAddress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/IsMultiSigAddressRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/IsMultiSigAddressReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /chain/transferTo:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_SendTran
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SendTranRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SendTranReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        BalanceReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/BalanceResult'
+        BalanceRequest:
+            type: object
+            properties:
+                walletAddress:
+                    type: string
+                contractAddress:
+                    type: string
+        BalanceResult:
+            type: object
+            properties:
+                balance:
+                    type: string
+                multisig:
+                    type: boolean
+        BlockResult:
+            type: object
+            properties:
+                hash:
+                    type: string
+                height:
+                    type: integer
+                    format: int64
+                txs:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                nextCursor:
+                    type: string
+        ChainListReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ChainListResult'
+        ChainListRequest:
+            type: object
+            properties:
+                chainCode:
+                    type: string
+        ChainListResult:
+            type: object
+            properties:
+                chainCode:
+                    type: string
+                code:
+                    type: string
+                contractAddress:
+                    type: string
+        GetBlockHashByHeightReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/BlockResult'
+        GetBlockHashByHeightRequest:
+            type: object
+            properties:
+                height:
+                    type: string
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        HeightReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: integer
+                    format: uint64
+        HeightRequest:
+            type: object
+            properties: {}
+        IsMultiSigAddressReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: boolean
+        IsMultiSigAddressRequest:
+            type: object
+            properties:
+                walletAddress:
+                    type: string
+        NewBip44Reply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/NewBip44Result'
+        NewBip44Request:
+            type: object
+            properties:
+                mnemonic:
+                    type: string
+                pass:
+                    type: string
+                index:
+                    type: integer
+                    format: uint32
+        NewBip44Result:
+            type: object
+            properties:
+                walletAddress:
+                    type: string
+                privKey:
+                    type: string
+                id:
+                    type: string
+        SendTranReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/SendTranResult'
+        SendTranRequest:
+            type: object
+            properties:
+                mnemonic:
+                    type: string
+                privKey:
+                    type: string
+                from:
+                    type: string
+                to:
+                    type: string
+                contractAddress:
+                    type: string
+                value:
+                    type: string
+                objectId:
+                    type: string
+        SendTranResult:
+            type: object
+            properties:
+                hash:
+                    type: string
+                msg:
+                    type: string
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        TxResult:
+            type: object
+            properties:
+                hash:
+                    type: string
+                from:
+                    type: string
+                to:
+                    type: string
+                tokenTransaction:
+                    type: boolean
+                contractAddress:
+                    type: string
+                status:
+                    type: boolean
+                value:
+                    type: string
+                fee:
+                    type: string
+                date:
+                    type: integer
+                    format: int64
+        TxUtxo:
+            type: object
+            properties:
+                hash:
+                    type: string
+                from:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Utxo'
+                to:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Utxo'
+                status:
+                    type: boolean
+                fee:
+                    type: string
+                date:
+                    type: integer
+                    format: int64
+        Utxo:
+            type: object
+            properties:
+                value:
+                    type: string
+                address:
+                    type: array
+                    items:
+                        type: string
+                isAddress:
+                    type: boolean
+tags:
+    - name: AddressV1
+    - name: TranV1
