@@ -60,3 +60,15 @@ func IsTxOutNil(err error) bool {
 func ErrorTxOutNil(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_TxOutNil.String(), fmt.Sprintf(format, args...))
 }
+
+func IsInvalidScriptType(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_InvalidScriptType.String() && e.Code == 500
+}
+
+func ErrorInvalidScriptType(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_InvalidScriptType.String(), fmt.Sprintf(format, args...))
+}

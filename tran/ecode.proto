@@ -22,4 +22,6 @@ enum ErrorReason {
   Invalid_Pub_ECDSA = 10000;
 
   TxOutNil = 10001;
+
+  InvalidScriptType = 10002;
 }
