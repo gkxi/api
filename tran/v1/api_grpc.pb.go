@@ -40,7 +40,7 @@ type TranV1Client interface {
 	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
 	GetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightReply, error)
 	GetBlockHashByHeightEth(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error)
-	GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxUtxo, error)
+	GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightBtcReply, error)
 }
 
 type tranV1Client struct {
@@ -114,8 +114,8 @@ func (c *tranV1Client) GetBlockHashByHeightEth(ctx context.Context, in *GetBlock
 	return out, nil
 }
 
-func (c *tranV1Client) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxUtxo, error) {
-	out := new(TxUtxo)
+func (c *tranV1Client) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightBtcReply, error) {
+	out := new(GetBlockHashByHeightBtcReply)
 	err := c.cc.Invoke(ctx, TranV1_GetBlockHashByHeightBtc_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -134,7 +134,7 @@ type TranV1Server interface {
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
 	GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
-	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*TxUtxo, error)
+	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error)
 	mustEmbedUnimplementedTranV1Server()
 }
 
@@ -163,7 +163,7 @@ func (UnimplementedTranV1Server) GetBlockHashByHeight(context.Context, *GetBlock
 func (UnimplementedTranV1Server) GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeightEth not implemented")
 }
-func (UnimplementedTranV1Server) GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*TxUtxo, error) {
+func (UnimplementedTranV1Server) GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeightBtc not implemented")
 }
 func (UnimplementedTranV1Server) mustEmbedUnimplementedTranV1Server() {}

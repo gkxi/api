@@ -32,7 +32,7 @@ type TranV1HTTPServer interface {
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
-	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*TxUtxo, error)
+	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error)
 	GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
@@ -234,7 +234,7 @@ func _TranV1_GetBlockHashByHeightBtc0_HTTP_Handler(srv TranV1HTTPServer) func(ct
 		if err != nil {
 			return err
 		}
-		reply := out.(*TxUtxo)
+		reply := out.(*GetBlockHashByHeightBtcReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -243,7 +243,7 @@ type TranV1HTTPClient interface {
 	Balance(ctx context.Context, req *BalanceRequest, opts ...http.CallOption) (rsp *BalanceReply, err error)
 	ChainList(ctx context.Context, req *ChainListRequest, opts ...http.CallOption) (rsp *ChainListReply, err error)
 	GetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightReply, err error)
-	GetBlockHashByHeightBtc(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxUtxo, err error)
+	GetBlockHashByHeightBtc(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightBtcReply, err error)
 	GetBlockHashByHeightEth(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxResult, err error)
 	Height(ctx context.Context, req *HeightRequest, opts ...http.CallOption) (rsp *HeightReply, err error)
 	IsMultiSigAddress(ctx context.Context, req *IsMultiSigAddressRequest, opts ...http.CallOption) (rsp *IsMultiSigAddressReply, err error)
@@ -297,8 +297,8 @@ func (c *TranV1HTTPClientImpl) GetBlockHashByHeight(ctx context.Context, in *Get
 	return &out, err
 }
 
-func (c *TranV1HTTPClientImpl) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*TxUtxo, error) {
-	var out TxUtxo
+func (c *TranV1HTTPClientImpl) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*GetBlockHashByHeightBtcReply, error) {
+	var out GetBlockHashByHeightBtcReply
 	pattern := "/chain/getBlockHashByHeightBtc/{height}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTranV1GetBlockHashByHeightBtc))

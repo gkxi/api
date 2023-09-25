@@ -107,7 +107,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/TxUtxo'
+                                $ref: '#/components/schemas/GetBlockHashByHeightBtcReply'
                 default:
                     description: Default error response
                     content:
@@ -287,6 +287,20 @@ components:
                         $ref: '#/components/schemas/GoogleProtobufAny'
                 nextCursor:
                     type: string
+        BtcBlockResult:
+            type: object
+            properties:
+                hash:
+                    type: string
+                height:
+                    type: integer
+                    format: int64
+                txs:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TxUtxo'
+                nextCursor:
+                    type: string
         ChainListReply:
             type: object
             properties:
@@ -314,6 +328,17 @@ components:
                     type: string
                 contractAddress:
                     type: string
+        GetBlockHashByHeightBtcReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/BtcBlockResult'
         GetBlockHashByHeightReply:
             type: object
             properties:

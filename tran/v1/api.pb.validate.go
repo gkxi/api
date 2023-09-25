@@ -2531,3 +2531,281 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetBlockHashByHeightReplyValidationError{}
+
+// Validate checks the field values on BtcBlockResult with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *BtcBlockResult) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BtcBlockResult with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in BtcBlockResultMultiError,
+// or nil if none found.
+func (m *BtcBlockResult) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BtcBlockResult) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Hash
+
+	// no validation rules for Height
+
+	for idx, item := range m.GetTxs() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, BtcBlockResultValidationError{
+						field:  fmt.Sprintf("Txs[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, BtcBlockResultValidationError{
+						field:  fmt.Sprintf("Txs[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BtcBlockResultValidationError{
+					field:  fmt.Sprintf("Txs[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for NextCursor
+
+	if len(errors) > 0 {
+		return BtcBlockResultMultiError(errors)
+	}
+
+	return nil
+}
+
+// BtcBlockResultMultiError is an error wrapping multiple validation errors
+// returned by BtcBlockResult.ValidateAll() if the designated constraints
+// aren't met.
+type BtcBlockResultMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BtcBlockResultMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BtcBlockResultMultiError) AllErrors() []error { return m }
+
+// BtcBlockResultValidationError is the validation error returned by
+// BtcBlockResult.Validate if the designated constraints aren't met.
+type BtcBlockResultValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BtcBlockResultValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BtcBlockResultValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BtcBlockResultValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BtcBlockResultValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BtcBlockResultValidationError) ErrorName() string { return "BtcBlockResultValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BtcBlockResultValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBtcBlockResult.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BtcBlockResultValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BtcBlockResultValidationError{}
+
+// Validate checks the field values on GetBlockHashByHeightBtcReply with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetBlockHashByHeightBtcReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetBlockHashByHeightBtcReply with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetBlockHashByHeightBtcReplyMultiError, or nil if none found.
+func (m *GetBlockHashByHeightBtcReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetBlockHashByHeightBtcReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetBlockHashByHeightBtcReplyValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetBlockHashByHeightBtcReplyValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetBlockHashByHeightBtcReplyValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetBlockHashByHeightBtcReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetBlockHashByHeightBtcReplyMultiError is an error wrapping multiple
+// validation errors returned by GetBlockHashByHeightBtcReply.ValidateAll() if
+// the designated constraints aren't met.
+type GetBlockHashByHeightBtcReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetBlockHashByHeightBtcReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetBlockHashByHeightBtcReplyMultiError) AllErrors() []error { return m }
+
+// GetBlockHashByHeightBtcReplyValidationError is the validation error returned
+// by GetBlockHashByHeightBtcReply.Validate if the designated constraints
+// aren't met.
+type GetBlockHashByHeightBtcReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetBlockHashByHeightBtcReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetBlockHashByHeightBtcReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetBlockHashByHeightBtcReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetBlockHashByHeightBtcReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetBlockHashByHeightBtcReplyValidationError) ErrorName() string {
+	return "GetBlockHashByHeightBtcReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetBlockHashByHeightBtcReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetBlockHashByHeightBtcReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetBlockHashByHeightBtcReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetBlockHashByHeightBtcReplyValidationError{}
