@@ -20,10 +20,10 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	TranV1_ChainList_FullMethodName               = "/tran.v1.TranV1/ChainList"
-	TranV1_Height_FullMethodName                  = "/tran.v1.TranV1/Height"
 	TranV1_IsMultiSigAddress_FullMethodName       = "/tran.v1.TranV1/IsMultiSigAddress"
 	TranV1_Balance_FullMethodName                 = "/tran.v1.TranV1/Balance"
 	TranV1_SendTran_FullMethodName                = "/tran.v1.TranV1/SendTran"
+	TranV1_Height_FullMethodName                  = "/tran.v1.TranV1/Height"
 	TranV1_GetBlockHashByHeight_FullMethodName    = "/tran.v1.TranV1/GetBlockHashByHeight"
 	TranV1_GetBlockHashByHeightEth_FullMethodName = "/tran.v1.TranV1/GetBlockHashByHeightEth"
 	TranV1_GetBlockHashByHeightBtc_FullMethodName = "/tran.v1.TranV1/GetBlockHashByHeightBtc"
@@ -34,10 +34,10 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TranV1Client interface {
 	ChainList(ctx context.Context, in *ChainListRequest, opts ...grpc.CallOption) (*ChainListReply, error)
-	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
 	IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddressRequest, opts ...grpc.CallOption) (*IsMultiSigAddressReply, error)
 	Balance(ctx context.Context, in *BalanceRequest, opts ...grpc.CallOption) (*BalanceReply, error)
 	SendTran(ctx context.Context, in *SendTranRequest, opts ...grpc.CallOption) (*SendTranReply, error)
+	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
 	GetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightReply, error)
 	GetBlockHashByHeightEth(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error)
 	GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxUtxo, error)
@@ -54,15 +54,6 @@ func NewTranV1Client(cc grpc.ClientConnInterface) TranV1Client {
 func (c *tranV1Client) ChainList(ctx context.Context, in *ChainListRequest, opts ...grpc.CallOption) (*ChainListReply, error) {
 	out := new(ChainListReply)
 	err := c.cc.Invoke(ctx, TranV1_ChainList_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *tranV1Client) Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error) {
-	out := new(HeightReply)
-	err := c.cc.Invoke(ctx, TranV1_Height_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,6 +81,15 @@ func (c *tranV1Client) Balance(ctx context.Context, in *BalanceRequest, opts ...
 func (c *tranV1Client) SendTran(ctx context.Context, in *SendTranRequest, opts ...grpc.CallOption) (*SendTranReply, error) {
 	out := new(SendTranReply)
 	err := c.cc.Invoke(ctx, TranV1_SendTran_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tranV1Client) Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error) {
+	out := new(HeightReply)
+	err := c.cc.Invoke(ctx, TranV1_Height_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -128,10 +128,10 @@ func (c *tranV1Client) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlock
 // for forward compatibility
 type TranV1Server interface {
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
-	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
+	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
 	GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
 	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*TxUtxo, error)
@@ -145,9 +145,6 @@ type UnimplementedTranV1Server struct {
 func (UnimplementedTranV1Server) ChainList(context.Context, *ChainListRequest) (*ChainListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChainList not implemented")
 }
-func (UnimplementedTranV1Server) Height(context.Context, *HeightRequest) (*HeightReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Height not implemented")
-}
 func (UnimplementedTranV1Server) IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsMultiSigAddress not implemented")
 }
@@ -156,6 +153,9 @@ func (UnimplementedTranV1Server) Balance(context.Context, *BalanceRequest) (*Bal
 }
 func (UnimplementedTranV1Server) SendTran(context.Context, *SendTranRequest) (*SendTranReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendTran not implemented")
+}
+func (UnimplementedTranV1Server) Height(context.Context, *HeightRequest) (*HeightReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Height not implemented")
 }
 func (UnimplementedTranV1Server) GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeight not implemented")
@@ -193,24 +193,6 @@ func _TranV1_ChainList_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranV1Server).ChainList(ctx, req.(*ChainListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TranV1_Height_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HeightRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TranV1Server).Height(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TranV1_Height_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TranV1Server).Height(ctx, req.(*HeightRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -265,6 +247,24 @@ func _TranV1_SendTran_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranV1Server).SendTran(ctx, req.(*SendTranRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranV1_Height_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HeightRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranV1Server).Height(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranV1_Height_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranV1Server).Height(ctx, req.(*HeightRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -335,10 +335,6 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TranV1_ChainList_Handler,
 		},
 		{
-			MethodName: "Height",
-			Handler:    _TranV1_Height_Handler,
-		},
-		{
 			MethodName: "IsMultiSigAddress",
 			Handler:    _TranV1_IsMultiSigAddress_Handler,
 		},
@@ -349,6 +345,10 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendTran",
 			Handler:    _TranV1_SendTran_Handler,
+		},
+		{
+			MethodName: "Height",
+			Handler:    _TranV1_Height_Handler,
 		},
 		{
 			MethodName: "GetBlockHashByHeight",

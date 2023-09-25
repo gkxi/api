@@ -383,213 +383,6 @@ var _ interface {
 	ErrorName() string
 } = ChainListReplyValidationError{}
 
-// Validate checks the field values on HeightRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *HeightRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on HeightRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in HeightRequestMultiError, or
-// nil if none found.
-func (m *HeightRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *HeightRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if len(errors) > 0 {
-		return HeightRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// HeightRequestMultiError is an error wrapping multiple validation errors
-// returned by HeightRequest.ValidateAll() if the designated constraints
-// aren't met.
-type HeightRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m HeightRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m HeightRequestMultiError) AllErrors() []error { return m }
-
-// HeightRequestValidationError is the validation error returned by
-// HeightRequest.Validate if the designated constraints aren't met.
-type HeightRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e HeightRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e HeightRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e HeightRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e HeightRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e HeightRequestValidationError) ErrorName() string { return "HeightRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e HeightRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sHeightRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = HeightRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = HeightRequestValidationError{}
-
-// Validate checks the field values on HeightReply with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *HeightReply) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on HeightReply with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in HeightReplyMultiError, or
-// nil if none found.
-func (m *HeightReply) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *HeightReply) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	// no validation rules for Success
-
-	// no validation rules for Code
-
-	// no validation rules for Message
-
-	// no validation rules for Data
-
-	if len(errors) > 0 {
-		return HeightReplyMultiError(errors)
-	}
-
-	return nil
-}
-
-// HeightReplyMultiError is an error wrapping multiple validation errors
-// returned by HeightReply.ValidateAll() if the designated constraints aren't met.
-type HeightReplyMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m HeightReplyMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m HeightReplyMultiError) AllErrors() []error { return m }
-
-// HeightReplyValidationError is the validation error returned by
-// HeightReply.Validate if the designated constraints aren't met.
-type HeightReplyValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e HeightReplyValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e HeightReplyValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e HeightReplyValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e HeightReplyValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e HeightReplyValidationError) ErrorName() string { return "HeightReplyValidationError" }
-
-// Error satisfies the builtin error interface
-func (e HeightReplyValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sHeightReply.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = HeightReplyValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = HeightReplyValidationError{}
-
 // Validate checks the field values on IsMultiSigAddressRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1516,6 +1309,213 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SendTranReplyValidationError{}
+
+// Validate checks the field values on HeightRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HeightRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HeightRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HeightRequestMultiError, or
+// nil if none found.
+func (m *HeightRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HeightRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return HeightRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// HeightRequestMultiError is an error wrapping multiple validation errors
+// returned by HeightRequest.ValidateAll() if the designated constraints
+// aren't met.
+type HeightRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HeightRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HeightRequestMultiError) AllErrors() []error { return m }
+
+// HeightRequestValidationError is the validation error returned by
+// HeightRequest.Validate if the designated constraints aren't met.
+type HeightRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HeightRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HeightRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HeightRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HeightRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HeightRequestValidationError) ErrorName() string { return "HeightRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HeightRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHeightRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HeightRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HeightRequestValidationError{}
+
+// Validate checks the field values on HeightReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HeightReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HeightReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HeightReplyMultiError, or
+// nil if none found.
+func (m *HeightReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HeightReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return HeightReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// HeightReplyMultiError is an error wrapping multiple validation errors
+// returned by HeightReply.ValidateAll() if the designated constraints aren't met.
+type HeightReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HeightReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HeightReplyMultiError) AllErrors() []error { return m }
+
+// HeightReplyValidationError is the validation error returned by
+// HeightReply.Validate if the designated constraints aren't met.
+type HeightReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HeightReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HeightReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HeightReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HeightReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HeightReplyValidationError) ErrorName() string { return "HeightReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HeightReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHeightReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HeightReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HeightReplyValidationError{}
 
 // Validate checks the field values on GetBlockHashByHeightRequest with the
 // rules defined in the proto definition for this message. If any rules are

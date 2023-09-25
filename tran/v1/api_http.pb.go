@@ -42,10 +42,10 @@ type TranV1HTTPServer interface {
 func RegisterTranV1HTTPServer(s *http.Server, srv TranV1HTTPServer) {
 	r := s.Route("/")
 	r.POST("/chain/list/{chainCode}", _TranV1_ChainList0_HTTP_Handler(srv))
-	r.POST("/chain/getLastBlockHeight", _TranV1_Height0_HTTP_Handler(srv))
 	r.POST("/chain/multisig", _TranV1_IsMultiSigAddress0_HTTP_Handler(srv))
 	r.POST("/chain/getBalance", _TranV1_Balance0_HTTP_Handler(srv))
 	r.POST("/chain/transferTo", _TranV1_SendTran0_HTTP_Handler(srv))
+	r.POST("/chain/getLastBlockHeight", _TranV1_Height0_HTTP_Handler(srv))
 	r.POST("/chain/getBlockHashByHeight/{height}", _TranV1_GetBlockHashByHeight0_HTTP_Handler(srv))
 	r.POST("/chain/getBlockHashByHeightEth/{height}", _TranV1_GetBlockHashByHeightEth0_HTTP_Handler(srv))
 	r.POST("/chain/getBlockHashByHeightBtc/{height}", _TranV1_GetBlockHashByHeightBtc0_HTTP_Handler(srv))
@@ -72,28 +72,6 @@ func _TranV1_ChainList0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context
 			return err
 		}
 		reply := out.(*ChainListReply)
-		return ctx.Result(200, reply)
-	}
-}
-
-func _TranV1_Height0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in HeightRequest
-		if err := ctx.Bind(&in); err != nil {
-			return err
-		}
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationTranV1Height)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Height(ctx, req.(*HeightRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*HeightReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -160,6 +138,28 @@ func _TranV1_SendTran0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context)
 			return err
 		}
 		reply := out.(*SendTranReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TranV1_Height0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in HeightRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTranV1Height)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Height(ctx, req.(*HeightRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*HeightReply)
 		return ctx.Result(200, reply)
 	}
 }

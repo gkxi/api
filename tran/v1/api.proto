@@ -66,15 +66,6 @@ service TranV1 {
 			summary: "余额";
 		};
 	};
-	rpc Height (HeightRequest) returns (HeightReply) {
-		option (google.api.http) = {
-			post: "/chain/getLastBlockHeight"
-			body: "*"
-		};
-		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-			summary: "余额";
-		};
-	};
 	rpc IsMultiSigAddress (IsMultiSigAddressRequest) returns (IsMultiSigAddressReply) {
 		option (google.api.http) = {
 			post: "/chain/multisig"
@@ -100,6 +91,15 @@ service TranV1 {
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
 			summary: "发送交易";
+		};
+	};
+	rpc Height (HeightRequest) returns (HeightReply) {
+		option (google.api.http) = {
+			post: "/chain/getLastBlockHeight"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "高度";
 		};
 	};
 	rpc GetBlockHashByHeight (GetBlockHashByHeightRequest) returns (GetBlockHashByHeightReply) {
@@ -148,14 +148,6 @@ message ChainListReply {
 	repeated ChainListResult data = 4;
 }
 
-message HeightRequest {}
-message HeightReply {
-	bool success = 1;
-	string code = 2;
-	string message = 3;
-	uint64 data = 4;
-}
-
 message IsMultiSigAddressRequest {
 	string walletAddress = 1 [(validate.rules).string.min_len = 2];
 }
@@ -201,6 +193,14 @@ message SendTranReply {
 	string code = 2;
 	string message = 3;
 	SendTranResult data = 4;
+}
+
+message HeightRequest {}
+message HeightReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	uint64 data = 4;
 }
 
 message GetBlockHashByHeightRequest {
