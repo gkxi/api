@@ -88,7 +88,7 @@ paths:
         post:
             tags:
                 - TranV1
-            operationId: TranV1_GetBlockHashByHeightBtc
+            operationId: TranV1_BtcGetBlockHashByHeight
             parameters:
                 - name: height
                   in: path
@@ -107,7 +107,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetBlockHashByHeightBtcReply'
+                                $ref: '#/components/schemas/BtcGetBlockHashByHeightReply'
                 default:
                     description: Default error response
                     content:
@@ -118,7 +118,7 @@ paths:
         post:
             tags:
                 - TranV1
-            operationId: TranV1_GetBlockHashByHeightEth
+            operationId: TranV1_EthGetBlockHashByHeight
             parameters:
                 - name: height
                   in: path
@@ -301,6 +301,17 @@ components:
                         $ref: '#/components/schemas/TxUtxo'
                 nextCursor:
                     type: string
+        BtcGetBlockHashByHeightReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/BtcBlockResult'
         ChainListReply:
             type: object
             properties:
@@ -328,17 +339,6 @@ components:
                     type: string
                 contractAddress:
                     type: string
-        GetBlockHashByHeightBtcReply:
-            type: object
-            properties:
-                success:
-                    type: boolean
-                code:
-                    type: string
-                message:
-                    type: string
-                data:
-                    $ref: '#/components/schemas/BtcBlockResult'
         GetBlockHashByHeightReply:
             type: object
             properties:
@@ -514,6 +514,10 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Utxo'
+                valueIn:
+                    type: string
+                value:
+                    type: string
                 status:
                     type: boolean
                 fee:

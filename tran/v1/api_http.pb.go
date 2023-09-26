@@ -20,20 +20,20 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationTranV1Balance = "/tran.v1.TranV1/Balance"
+const OperationTranV1BtcGetBlockHashByHeight = "/tran.v1.TranV1/BtcGetBlockHashByHeight"
 const OperationTranV1ChainList = "/tran.v1.TranV1/ChainList"
+const OperationTranV1EthGetBlockHashByHeight = "/tran.v1.TranV1/EthGetBlockHashByHeight"
 const OperationTranV1GetBlockHashByHeight = "/tran.v1.TranV1/GetBlockHashByHeight"
-const OperationTranV1GetBlockHashByHeightBtc = "/tran.v1.TranV1/GetBlockHashByHeightBtc"
-const OperationTranV1GetBlockHashByHeightEth = "/tran.v1.TranV1/GetBlockHashByHeightEth"
 const OperationTranV1Height = "/tran.v1.TranV1/Height"
 const OperationTranV1IsMultiSigAddress = "/tran.v1.TranV1/IsMultiSigAddress"
 const OperationTranV1SendTran = "/tran.v1.TranV1/SendTran"
 
 type TranV1HTTPServer interface {
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
+	BtcGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*BtcGetBlockHashByHeightReply, error)
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
+	EthGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
-	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error)
-	GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
@@ -47,8 +47,8 @@ func RegisterTranV1HTTPServer(s *http.Server, srv TranV1HTTPServer) {
 	r.POST("/chain/transferTo", _TranV1_SendTran0_HTTP_Handler(srv))
 	r.POST("/chain/getLastBlockHeight", _TranV1_Height0_HTTP_Handler(srv))
 	r.POST("/chain/getBlockHashByHeight/{height}", _TranV1_GetBlockHashByHeight0_HTTP_Handler(srv))
-	r.POST("/chain/getBlockHashByHeightEth/{height}", _TranV1_GetBlockHashByHeightEth0_HTTP_Handler(srv))
-	r.POST("/chain/getBlockHashByHeightBtc/{height}", _TranV1_GetBlockHashByHeightBtc0_HTTP_Handler(srv))
+	r.POST("/chain/getBlockHashByHeightEth/{height}", _TranV1_EthGetBlockHashByHeight0_HTTP_Handler(srv))
+	r.POST("/chain/getBlockHashByHeightBtc/{height}", _TranV1_BtcGetBlockHashByHeight0_HTTP_Handler(srv))
 }
 
 func _TranV1_ChainList0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
@@ -189,7 +189,7 @@ func _TranV1_GetBlockHashByHeight0_HTTP_Handler(srv TranV1HTTPServer) func(ctx h
 	}
 }
 
-func _TranV1_GetBlockHashByHeightEth0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+func _TranV1_EthGetBlockHashByHeight0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetBlockHashByHeightRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -201,9 +201,9 @@ func _TranV1_GetBlockHashByHeightEth0_HTTP_Handler(srv TranV1HTTPServer) func(ct
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationTranV1GetBlockHashByHeightEth)
+		http.SetOperation(ctx, OperationTranV1EthGetBlockHashByHeight)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetBlockHashByHeightEth(ctx, req.(*GetBlockHashByHeightRequest))
+			return srv.EthGetBlockHashByHeight(ctx, req.(*GetBlockHashByHeightRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -214,7 +214,7 @@ func _TranV1_GetBlockHashByHeightEth0_HTTP_Handler(srv TranV1HTTPServer) func(ct
 	}
 }
 
-func _TranV1_GetBlockHashByHeightBtc0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+func _TranV1_BtcGetBlockHashByHeight0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetBlockHashByHeightRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -226,25 +226,25 @@ func _TranV1_GetBlockHashByHeightBtc0_HTTP_Handler(srv TranV1HTTPServer) func(ct
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationTranV1GetBlockHashByHeightBtc)
+		http.SetOperation(ctx, OperationTranV1BtcGetBlockHashByHeight)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetBlockHashByHeightBtc(ctx, req.(*GetBlockHashByHeightRequest))
+			return srv.BtcGetBlockHashByHeight(ctx, req.(*GetBlockHashByHeightRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*GetBlockHashByHeightBtcReply)
+		reply := out.(*BtcGetBlockHashByHeightReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type TranV1HTTPClient interface {
 	Balance(ctx context.Context, req *BalanceRequest, opts ...http.CallOption) (rsp *BalanceReply, err error)
+	BtcGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *BtcGetBlockHashByHeightReply, err error)
 	ChainList(ctx context.Context, req *ChainListRequest, opts ...http.CallOption) (rsp *ChainListReply, err error)
+	EthGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxResult, err error)
 	GetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightReply, err error)
-	GetBlockHashByHeightBtc(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightBtcReply, err error)
-	GetBlockHashByHeightEth(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxResult, err error)
 	Height(ctx context.Context, req *HeightRequest, opts ...http.CallOption) (rsp *HeightReply, err error)
 	IsMultiSigAddress(ctx context.Context, req *IsMultiSigAddressRequest, opts ...http.CallOption) (rsp *IsMultiSigAddressReply, err error)
 	SendTran(ctx context.Context, req *SendTranRequest, opts ...http.CallOption) (rsp *SendTranReply, err error)
@@ -271,6 +271,19 @@ func (c *TranV1HTTPClientImpl) Balance(ctx context.Context, in *BalanceRequest, 
 	return &out, err
 }
 
+func (c *TranV1HTTPClientImpl) BtcGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*BtcGetBlockHashByHeightReply, error) {
+	var out BtcGetBlockHashByHeightReply
+	pattern := "/chain/getBlockHashByHeightBtc/{height}"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTranV1BtcGetBlockHashByHeight))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
 func (c *TranV1HTTPClientImpl) ChainList(ctx context.Context, in *ChainListRequest, opts ...http.CallOption) (*ChainListReply, error) {
 	var out ChainListReply
 	pattern := "/chain/list/{chainCode}"
@@ -284,37 +297,24 @@ func (c *TranV1HTTPClientImpl) ChainList(ctx context.Context, in *ChainListReque
 	return &out, err
 }
 
+func (c *TranV1HTTPClientImpl) EthGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*TxResult, error) {
+	var out TxResult
+	pattern := "/chain/getBlockHashByHeightEth/{height}"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTranV1EthGetBlockHashByHeight))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
 func (c *TranV1HTTPClientImpl) GetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*GetBlockHashByHeightReply, error) {
 	var out GetBlockHashByHeightReply
 	pattern := "/chain/getBlockHashByHeight/{height}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTranV1GetBlockHashByHeight))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, err
-}
-
-func (c *TranV1HTTPClientImpl) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*GetBlockHashByHeightBtcReply, error) {
-	var out GetBlockHashByHeightBtcReply
-	pattern := "/chain/getBlockHashByHeightBtc/{height}"
-	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationTranV1GetBlockHashByHeightBtc))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, err
-}
-
-func (c *TranV1HTTPClientImpl) GetBlockHashByHeightEth(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...http.CallOption) (*TxResult, error) {
-	var out TxResult
-	pattern := "/chain/getBlockHashByHeightEth/{height}"
-	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationTranV1GetBlockHashByHeightEth))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

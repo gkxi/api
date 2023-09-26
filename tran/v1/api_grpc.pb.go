@@ -25,8 +25,8 @@ const (
 	TranV1_SendTran_FullMethodName                = "/tran.v1.TranV1/SendTran"
 	TranV1_Height_FullMethodName                  = "/tran.v1.TranV1/Height"
 	TranV1_GetBlockHashByHeight_FullMethodName    = "/tran.v1.TranV1/GetBlockHashByHeight"
-	TranV1_GetBlockHashByHeightEth_FullMethodName = "/tran.v1.TranV1/GetBlockHashByHeightEth"
-	TranV1_GetBlockHashByHeightBtc_FullMethodName = "/tran.v1.TranV1/GetBlockHashByHeightBtc"
+	TranV1_EthGetBlockHashByHeight_FullMethodName = "/tran.v1.TranV1/EthGetBlockHashByHeight"
+	TranV1_BtcGetBlockHashByHeight_FullMethodName = "/tran.v1.TranV1/BtcGetBlockHashByHeight"
 )
 
 // TranV1Client is the client API for TranV1 service.
@@ -39,8 +39,8 @@ type TranV1Client interface {
 	SendTran(ctx context.Context, in *SendTranRequest, opts ...grpc.CallOption) (*SendTranReply, error)
 	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
 	GetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightReply, error)
-	GetBlockHashByHeightEth(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error)
-	GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightBtcReply, error)
+	EthGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error)
+	BtcGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*BtcGetBlockHashByHeightReply, error)
 }
 
 type tranV1Client struct {
@@ -105,18 +105,18 @@ func (c *tranV1Client) GetBlockHashByHeight(ctx context.Context, in *GetBlockHas
 	return out, nil
 }
 
-func (c *tranV1Client) GetBlockHashByHeightEth(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error) {
+func (c *tranV1Client) EthGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*TxResult, error) {
 	out := new(TxResult)
-	err := c.cc.Invoke(ctx, TranV1_GetBlockHashByHeightEth_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, TranV1_EthGetBlockHashByHeight_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *tranV1Client) GetBlockHashByHeightBtc(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightBtcReply, error) {
-	out := new(GetBlockHashByHeightBtcReply)
-	err := c.cc.Invoke(ctx, TranV1_GetBlockHashByHeightBtc_FullMethodName, in, out, opts...)
+func (c *tranV1Client) BtcGetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*BtcGetBlockHashByHeightReply, error) {
+	out := new(BtcGetBlockHashByHeightReply)
+	err := c.cc.Invoke(ctx, TranV1_BtcGetBlockHashByHeight_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,8 +133,8 @@ type TranV1Server interface {
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
-	GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
-	GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error)
+	EthGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
+	BtcGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*BtcGetBlockHashByHeightReply, error)
 	mustEmbedUnimplementedTranV1Server()
 }
 
@@ -160,11 +160,11 @@ func (UnimplementedTranV1Server) Height(context.Context, *HeightRequest) (*Heigh
 func (UnimplementedTranV1Server) GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeight not implemented")
 }
-func (UnimplementedTranV1Server) GetBlockHashByHeightEth(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeightEth not implemented")
+func (UnimplementedTranV1Server) EthGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EthGetBlockHashByHeight not implemented")
 }
-func (UnimplementedTranV1Server) GetBlockHashByHeightBtc(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightBtcReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBlockHashByHeightBtc not implemented")
+func (UnimplementedTranV1Server) BtcGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*BtcGetBlockHashByHeightReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BtcGetBlockHashByHeight not implemented")
 }
 func (UnimplementedTranV1Server) mustEmbedUnimplementedTranV1Server() {}
 
@@ -287,38 +287,38 @@ func _TranV1_GetBlockHashByHeight_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TranV1_GetBlockHashByHeightEth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TranV1_EthGetBlockHashByHeight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetBlockHashByHeightRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TranV1Server).GetBlockHashByHeightEth(ctx, in)
+		return srv.(TranV1Server).EthGetBlockHashByHeight(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TranV1_GetBlockHashByHeightEth_FullMethodName,
+		FullMethod: TranV1_EthGetBlockHashByHeight_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TranV1Server).GetBlockHashByHeightEth(ctx, req.(*GetBlockHashByHeightRequest))
+		return srv.(TranV1Server).EthGetBlockHashByHeight(ctx, req.(*GetBlockHashByHeightRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TranV1_GetBlockHashByHeightBtc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TranV1_BtcGetBlockHashByHeight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetBlockHashByHeightRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TranV1Server).GetBlockHashByHeightBtc(ctx, in)
+		return srv.(TranV1Server).BtcGetBlockHashByHeight(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TranV1_GetBlockHashByHeightBtc_FullMethodName,
+		FullMethod: TranV1_BtcGetBlockHashByHeight_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TranV1Server).GetBlockHashByHeightBtc(ctx, req.(*GetBlockHashByHeightRequest))
+		return srv.(TranV1Server).BtcGetBlockHashByHeight(ctx, req.(*GetBlockHashByHeightRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -355,12 +355,12 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TranV1_GetBlockHashByHeight_Handler,
 		},
 		{
-			MethodName: "GetBlockHashByHeightEth",
-			Handler:    _TranV1_GetBlockHashByHeightEth_Handler,
+			MethodName: "EthGetBlockHashByHeight",
+			Handler:    _TranV1_EthGetBlockHashByHeight_Handler,
 		},
 		{
-			MethodName: "GetBlockHashByHeightBtc",
-			Handler:    _TranV1_GetBlockHashByHeightBtc_Handler,
+			MethodName: "BtcGetBlockHashByHeight",
+			Handler:    _TranV1_BtcGetBlockHashByHeight_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -111,7 +111,7 @@ service TranV1 {
 			summary: "发送交易";
 		};
 	};
-	rpc GetBlockHashByHeightEth (GetBlockHashByHeightRequest) returns (TxResult) {
+	rpc EthGetBlockHashByHeight (GetBlockHashByHeightRequest) returns (TxResult) {
 		option (google.api.http) = {
 			post: "/chain/getBlockHashByHeightEth/{height}"
 			body: "*"
@@ -120,7 +120,7 @@ service TranV1 {
 			summary: "发送交易";
 		};
 	};
-	rpc GetBlockHashByHeightBtc (GetBlockHashByHeightRequest) returns (GetBlockHashByHeightBtcReply) {
+	rpc BtcGetBlockHashByHeight (GetBlockHashByHeightRequest) returns (BtcGetBlockHashByHeightReply) {
 		option (google.api.http) = {
 			post: "/chain/getBlockHashByHeightBtc/{height}"
 			body: "*"
@@ -228,6 +228,8 @@ message TxUtxo {
 	string hash = 1;
 	repeated Utxo from = 2;
 	repeated Utxo to = 3;
+	string valueIn = 4;
+	string value = 5;
 	bool status = 6;
 	string fee = 9;
 	int64 date = 10;
@@ -264,7 +266,7 @@ message BtcBlockResult {
 	repeated TxUtxo txs = 3;
 	string nextCursor = 4;
 }
-message GetBlockHashByHeightBtcReply {
+message BtcGetBlockHashByHeightReply {
 	bool success = 1;
 	string code = 2;
 	string message = 3;
