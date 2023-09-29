@@ -957,22 +957,22 @@ var _ interface {
 	ErrorName() string
 } = BalanceReplyValidationError{}
 
-// Validate checks the field values on GasPriceRequest with the rules defined
+// Validate checks the field values on MinerFeeRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
-func (m *GasPriceRequest) Validate() error {
+func (m *MinerFeeRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GasPriceRequest with the rules
+// ValidateAll checks the field values on MinerFeeRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GasPriceRequestMultiError, or nil if none found.
-func (m *GasPriceRequest) ValidateAll() error {
+// MinerFeeRequestMultiError, or nil if none found.
+func (m *MinerFeeRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GasPriceRequest) validate(all bool) error {
+func (m *MinerFeeRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -980,19 +980,19 @@ func (m *GasPriceRequest) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return GasPriceRequestMultiError(errors)
+		return MinerFeeRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// GasPriceRequestMultiError is an error wrapping multiple validation errors
-// returned by GasPriceRequest.ValidateAll() if the designated constraints
+// MinerFeeRequestMultiError is an error wrapping multiple validation errors
+// returned by MinerFeeRequest.ValidateAll() if the designated constraints
 // aren't met.
-type GasPriceRequestMultiError []error
+type MinerFeeRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GasPriceRequestMultiError) Error() string {
+func (m MinerFeeRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1001,11 +1001,11 @@ func (m GasPriceRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GasPriceRequestMultiError) AllErrors() []error { return m }
+func (m MinerFeeRequestMultiError) AllErrors() []error { return m }
 
-// GasPriceRequestValidationError is the validation error returned by
-// GasPriceRequest.Validate if the designated constraints aren't met.
-type GasPriceRequestValidationError struct {
+// MinerFeeRequestValidationError is the validation error returned by
+// MinerFeeRequest.Validate if the designated constraints aren't met.
+type MinerFeeRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1013,22 +1013,22 @@ type GasPriceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GasPriceRequestValidationError) Field() string { return e.field }
+func (e MinerFeeRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GasPriceRequestValidationError) Reason() string { return e.reason }
+func (e MinerFeeRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GasPriceRequestValidationError) Cause() error { return e.cause }
+func (e MinerFeeRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GasPriceRequestValidationError) Key() bool { return e.key }
+func (e MinerFeeRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GasPriceRequestValidationError) ErrorName() string { return "GasPriceRequestValidationError" }
+func (e MinerFeeRequestValidationError) ErrorName() string { return "MinerFeeRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GasPriceRequestValidationError) Error() string {
+func (e MinerFeeRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1040,14 +1040,14 @@ func (e GasPriceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGasPriceRequest.%s: %s%s",
+		"invalid %sMinerFeeRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GasPriceRequestValidationError{}
+var _ error = MinerFeeRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1055,46 +1055,46 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GasPriceRequestValidationError{}
+} = MinerFeeRequestValidationError{}
 
-// Validate checks the field values on GasPriceReply with the rules defined in
+// Validate checks the field values on MinerFeeReply with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *GasPriceReply) Validate() error {
+func (m *MinerFeeReply) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GasPriceReply with the rules defined
+// ValidateAll checks the field values on MinerFeeReply with the rules defined
 // in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in GasPriceReplyMultiError, or
+// result is a list of violation errors wrapped in MinerFeeReplyMultiError, or
 // nil if none found.
-func (m *GasPriceReply) ValidateAll() error {
+func (m *MinerFeeReply) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GasPriceReply) validate(all bool) error {
+func (m *MinerFeeReply) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	// no validation rules for GasPrice
+	// no validation rules for Fee
 
 	if len(errors) > 0 {
-		return GasPriceReplyMultiError(errors)
+		return MinerFeeReplyMultiError(errors)
 	}
 
 	return nil
 }
 
-// GasPriceReplyMultiError is an error wrapping multiple validation errors
-// returned by GasPriceReply.ValidateAll() if the designated constraints
+// MinerFeeReplyMultiError is an error wrapping multiple validation errors
+// returned by MinerFeeReply.ValidateAll() if the designated constraints
 // aren't met.
-type GasPriceReplyMultiError []error
+type MinerFeeReplyMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GasPriceReplyMultiError) Error() string {
+func (m MinerFeeReplyMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1103,11 +1103,11 @@ func (m GasPriceReplyMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GasPriceReplyMultiError) AllErrors() []error { return m }
+func (m MinerFeeReplyMultiError) AllErrors() []error { return m }
 
-// GasPriceReplyValidationError is the validation error returned by
-// GasPriceReply.Validate if the designated constraints aren't met.
-type GasPriceReplyValidationError struct {
+// MinerFeeReplyValidationError is the validation error returned by
+// MinerFeeReply.Validate if the designated constraints aren't met.
+type MinerFeeReplyValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1115,22 +1115,22 @@ type GasPriceReplyValidationError struct {
 }
 
 // Field function returns field value.
-func (e GasPriceReplyValidationError) Field() string { return e.field }
+func (e MinerFeeReplyValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GasPriceReplyValidationError) Reason() string { return e.reason }
+func (e MinerFeeReplyValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GasPriceReplyValidationError) Cause() error { return e.cause }
+func (e MinerFeeReplyValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GasPriceReplyValidationError) Key() bool { return e.key }
+func (e MinerFeeReplyValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GasPriceReplyValidationError) ErrorName() string { return "GasPriceReplyValidationError" }
+func (e MinerFeeReplyValidationError) ErrorName() string { return "MinerFeeReplyValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GasPriceReplyValidationError) Error() string {
+func (e MinerFeeReplyValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1142,14 +1142,14 @@ func (e GasPriceReplyValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGasPriceReply.%s: %s%s",
+		"invalid %sMinerFeeReply.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GasPriceReplyValidationError{}
+var _ error = MinerFeeReplyValidationError{}
 
 var _ interface {
 	Field() string
@@ -1157,7 +1157,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GasPriceReplyValidationError{}
+} = MinerFeeReplyValidationError{}
 
 // Validate checks the field values on SendTranRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the

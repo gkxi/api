@@ -84,9 +84,9 @@ service TranV1 {
 			summary: "余额";
 		};
 	};
-	rpc GasPrice (GasPriceRequest) returns (GasPriceReply) {
+	rpc MinerFee (MinerFeeRequest) returns (MinerFeeReply) {
 		option (google.api.http) = {
-			post: "/chain/gasprice"
+			post: "/chain/minerfee"
 			body: "*"
 		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -184,9 +184,9 @@ message BalanceReply {
 	BalanceResult data = 4;
 }
 
-message GasPriceRequest {}
-message GasPriceReply {
-	string gasPrice = 1;
+message MinerFeeRequest {}
+message MinerFeeReply {
+	string fee = 1;
 }
 
 message SendTranRequest {

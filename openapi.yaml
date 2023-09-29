@@ -30,30 +30,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /chain/gasprice:
-        post:
-            tags:
-                - TranV1
-            operationId: TranV1_GasPrice
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/GasPriceRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GasPriceReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
     /chain/getBalance:
         post:
             tags:
@@ -222,6 +198,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /chain/minerfee:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_MinerFee
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/MinerFeeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MinerFeeReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /chain/multisig:
         post:
             tags:
@@ -363,14 +363,6 @@ components:
                     type: string
                 contractAddress:
                     type: string
-        GasPriceReply:
-            type: object
-            properties:
-                gasPrice:
-                    type: string
-        GasPriceRequest:
-            type: object
-            properties: {}
         GetBlockHashByHeightReply:
             type: object
             properties:
@@ -426,6 +418,14 @@ components:
             properties:
                 walletAddress:
                     type: string
+        MinerFeeReply:
+            type: object
+            properties:
+                fee:
+                    type: string
+        MinerFeeRequest:
+            type: object
+            properties: {}
         NewBip44Reply:
             type: object
             properties:

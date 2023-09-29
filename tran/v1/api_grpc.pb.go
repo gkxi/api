@@ -22,7 +22,7 @@ const (
 	TranV1_ChainList_FullMethodName               = "/tran.v1.TranV1/ChainList"
 	TranV1_IsMultiSigAddress_FullMethodName       = "/tran.v1.TranV1/IsMultiSigAddress"
 	TranV1_Balance_FullMethodName                 = "/tran.v1.TranV1/Balance"
-	TranV1_GasPrice_FullMethodName                = "/tran.v1.TranV1/GasPrice"
+	TranV1_MinerFee_FullMethodName                = "/tran.v1.TranV1/MinerFee"
 	TranV1_SendTran_FullMethodName                = "/tran.v1.TranV1/SendTran"
 	TranV1_Height_FullMethodName                  = "/tran.v1.TranV1/Height"
 	TranV1_GetBlockHashByHeight_FullMethodName    = "/tran.v1.TranV1/GetBlockHashByHeight"
@@ -37,7 +37,7 @@ type TranV1Client interface {
 	ChainList(ctx context.Context, in *ChainListRequest, opts ...grpc.CallOption) (*ChainListReply, error)
 	IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddressRequest, opts ...grpc.CallOption) (*IsMultiSigAddressReply, error)
 	Balance(ctx context.Context, in *BalanceRequest, opts ...grpc.CallOption) (*BalanceReply, error)
-	GasPrice(ctx context.Context, in *GasPriceRequest, opts ...grpc.CallOption) (*GasPriceReply, error)
+	MinerFee(ctx context.Context, in *MinerFeeRequest, opts ...grpc.CallOption) (*MinerFeeReply, error)
 	SendTran(ctx context.Context, in *SendTranRequest, opts ...grpc.CallOption) (*SendTranReply, error)
 	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
 	GetBlockHashByHeight(ctx context.Context, in *GetBlockHashByHeightRequest, opts ...grpc.CallOption) (*GetBlockHashByHeightReply, error)
@@ -80,9 +80,9 @@ func (c *tranV1Client) Balance(ctx context.Context, in *BalanceRequest, opts ...
 	return out, nil
 }
 
-func (c *tranV1Client) GasPrice(ctx context.Context, in *GasPriceRequest, opts ...grpc.CallOption) (*GasPriceReply, error) {
-	out := new(GasPriceReply)
-	err := c.cc.Invoke(ctx, TranV1_GasPrice_FullMethodName, in, out, opts...)
+func (c *tranV1Client) MinerFee(ctx context.Context, in *MinerFeeRequest, opts ...grpc.CallOption) (*MinerFeeReply, error) {
+	out := new(MinerFeeReply)
+	err := c.cc.Invoke(ctx, TranV1_MinerFee_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ type TranV1Server interface {
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
-	GasPrice(context.Context, *GasPriceRequest) (*GasPriceReply, error)
+	MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error)
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
@@ -163,8 +163,8 @@ func (UnimplementedTranV1Server) IsMultiSigAddress(context.Context, *IsMultiSigA
 func (UnimplementedTranV1Server) Balance(context.Context, *BalanceRequest) (*BalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Balance not implemented")
 }
-func (UnimplementedTranV1Server) GasPrice(context.Context, *GasPriceRequest) (*GasPriceReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GasPrice not implemented")
+func (UnimplementedTranV1Server) MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MinerFee not implemented")
 }
 func (UnimplementedTranV1Server) SendTran(context.Context, *SendTranRequest) (*SendTranReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendTran not implemented")
@@ -248,20 +248,20 @@ func _TranV1_Balance_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TranV1_GasPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GasPriceRequest)
+func _TranV1_MinerFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MinerFeeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TranV1Server).GasPrice(ctx, in)
+		return srv.(TranV1Server).MinerFee(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TranV1_GasPrice_FullMethodName,
+		FullMethod: TranV1_MinerFee_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TranV1Server).GasPrice(ctx, req.(*GasPriceRequest))
+		return srv.(TranV1Server).MinerFee(ctx, req.(*MinerFeeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -376,8 +376,8 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TranV1_Balance_Handler,
 		},
 		{
-			MethodName: "GasPrice",
-			Handler:    _TranV1_GasPrice_Handler,
+			MethodName: "MinerFee",
+			Handler:    _TranV1_MinerFee_Handler,
 		},
 		{
 			MethodName: "SendTran",
