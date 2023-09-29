@@ -425,7 +425,13 @@ components:
                     type: string
         MinerFeeRequest:
             type: object
-            properties: {}
+            properties:
+                from:
+                    type: string
+                to:
+                    type: string
+                value:
+                    type: string
         NewBip44Reply:
             type: object
             properties:

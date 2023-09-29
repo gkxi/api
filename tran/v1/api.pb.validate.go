@@ -979,6 +979,12 @@ func (m *MinerFeeRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for From
+
+	// no validation rules for To
+
+	// no validation rules for Value
+
 	if len(errors) > 0 {
 		return MinerFeeRequestMultiError(errors)
 	}

@@ -184,7 +184,11 @@ message BalanceReply {
 	BalanceResult data = 4;
 }
 
-message MinerFeeRequest {}
+message MinerFeeRequest {
+	string from = 3;
+	string to = 4;
+	string value = 6;
+}
 message MinerFeeReply {
 	string fee = 1;
 }
