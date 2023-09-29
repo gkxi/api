@@ -84,6 +84,15 @@ service TranV1 {
 			summary: "余额";
 		};
 	};
+	rpc GasPrice (GasPriceRequest) returns (GasPriceReply) {
+		option (google.api.http) = {
+			post: "/chain/gasprice"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "获取gasprice";
+		};
+	};
 	rpc SendTran (SendTranRequest) returns (SendTranReply) {
 		option (google.api.http) = {
 			post: "/chain/transferTo"
@@ -173,6 +182,11 @@ message BalanceReply {
 	string code = 2;
 	string message = 3;
 	BalanceResult data = 4;
+}
+
+message GasPriceRequest {}
+message GasPriceReply {
+	string gasPrice = 1;
 }
 
 message SendTranRequest {

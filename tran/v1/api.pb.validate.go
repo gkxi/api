@@ -957,6 +957,208 @@ var _ interface {
 	ErrorName() string
 } = BalanceReplyValidationError{}
 
+// Validate checks the field values on GasPriceRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GasPriceRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GasPriceRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GasPriceRequestMultiError, or nil if none found.
+func (m *GasPriceRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GasPriceRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return GasPriceRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GasPriceRequestMultiError is an error wrapping multiple validation errors
+// returned by GasPriceRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GasPriceRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GasPriceRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GasPriceRequestMultiError) AllErrors() []error { return m }
+
+// GasPriceRequestValidationError is the validation error returned by
+// GasPriceRequest.Validate if the designated constraints aren't met.
+type GasPriceRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GasPriceRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GasPriceRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GasPriceRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GasPriceRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GasPriceRequestValidationError) ErrorName() string { return "GasPriceRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GasPriceRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGasPriceRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GasPriceRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GasPriceRequestValidationError{}
+
+// Validate checks the field values on GasPriceReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GasPriceReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GasPriceReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GasPriceReplyMultiError, or
+// nil if none found.
+func (m *GasPriceReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GasPriceReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for GasPrice
+
+	if len(errors) > 0 {
+		return GasPriceReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GasPriceReplyMultiError is an error wrapping multiple validation errors
+// returned by GasPriceReply.ValidateAll() if the designated constraints
+// aren't met.
+type GasPriceReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GasPriceReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GasPriceReplyMultiError) AllErrors() []error { return m }
+
+// GasPriceReplyValidationError is the validation error returned by
+// GasPriceReply.Validate if the designated constraints aren't met.
+type GasPriceReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GasPriceReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GasPriceReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GasPriceReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GasPriceReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GasPriceReplyValidationError) ErrorName() string { return "GasPriceReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GasPriceReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGasPriceReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GasPriceReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GasPriceReplyValidationError{}
+
 // Validate checks the field values on SendTranRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.

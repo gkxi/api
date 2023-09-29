@@ -23,6 +23,7 @@ const OperationTranV1Balance = "/tran.v1.TranV1/Balance"
 const OperationTranV1BtcGetBlockHashByHeight = "/tran.v1.TranV1/BtcGetBlockHashByHeight"
 const OperationTranV1ChainList = "/tran.v1.TranV1/ChainList"
 const OperationTranV1EthGetBlockHashByHeight = "/tran.v1.TranV1/EthGetBlockHashByHeight"
+const OperationTranV1GasPrice = "/tran.v1.TranV1/GasPrice"
 const OperationTranV1GetBlockHashByHeight = "/tran.v1.TranV1/GetBlockHashByHeight"
 const OperationTranV1Height = "/tran.v1.TranV1/Height"
 const OperationTranV1IsMultiSigAddress = "/tran.v1.TranV1/IsMultiSigAddress"
@@ -33,6 +34,7 @@ type TranV1HTTPServer interface {
 	BtcGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*BtcGetBlockHashByHeightReply, error)
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
 	EthGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
+	GasPrice(context.Context, *GasPriceRequest) (*GasPriceReply, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
@@ -44,6 +46,7 @@ func RegisterTranV1HTTPServer(s *http.Server, srv TranV1HTTPServer) {
 	r.POST("/chain/list/{chainCode}", _TranV1_ChainList0_HTTP_Handler(srv))
 	r.POST("/chain/multisig", _TranV1_IsMultiSigAddress0_HTTP_Handler(srv))
 	r.POST("/chain/getBalance", _TranV1_Balance0_HTTP_Handler(srv))
+	r.POST("/chain/gasprice", _TranV1_GasPrice0_HTTP_Handler(srv))
 	r.POST("/chain/transferTo", _TranV1_SendTran0_HTTP_Handler(srv))
 	r.POST("/chain/getLastBlockHeight", _TranV1_Height0_HTTP_Handler(srv))
 	r.POST("/chain/getBlockHashByHeight/{height}", _TranV1_GetBlockHashByHeight0_HTTP_Handler(srv))
@@ -116,6 +119,28 @@ func _TranV1_Balance0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) 
 			return err
 		}
 		reply := out.(*BalanceReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TranV1_GasPrice0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GasPriceRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTranV1GasPrice)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GasPrice(ctx, req.(*GasPriceRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GasPriceReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -244,6 +269,7 @@ type TranV1HTTPClient interface {
 	BtcGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *BtcGetBlockHashByHeightReply, err error)
 	ChainList(ctx context.Context, req *ChainListRequest, opts ...http.CallOption) (rsp *ChainListReply, err error)
 	EthGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxResult, err error)
+	GasPrice(ctx context.Context, req *GasPriceRequest, opts ...http.CallOption) (rsp *GasPriceReply, err error)
 	GetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightReply, err error)
 	Height(ctx context.Context, req *HeightRequest, opts ...http.CallOption) (rsp *HeightReply, err error)
 	IsMultiSigAddress(ctx context.Context, req *IsMultiSigAddressRequest, opts ...http.CallOption) (rsp *IsMultiSigAddressReply, err error)
@@ -302,6 +328,19 @@ func (c *TranV1HTTPClientImpl) EthGetBlockHashByHeight(ctx context.Context, in *
 	pattern := "/chain/getBlockHashByHeightEth/{height}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTranV1EthGetBlockHashByHeight))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *TranV1HTTPClientImpl) GasPrice(ctx context.Context, in *GasPriceRequest, opts ...http.CallOption) (*GasPriceReply, error) {
+	var out GasPriceReply
+	pattern := "/chain/gasprice"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTranV1GasPrice))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
