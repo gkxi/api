@@ -181,7 +181,7 @@ message BalanceReply {
 	bool success = 1;
 	string code = 2;
 	string message = 3;
-	BalanceResult data = 4;
+	string data = 4;
 }
 
 message MinerFeeRequest {
@@ -276,7 +276,6 @@ message GetBlockHashByHeightReply {
 	string message = 3;
 	BlockResult data = 4;
 }
-
 
 message BtcBlockResult {
 	string hash = 1;

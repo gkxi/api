@@ -282,7 +282,7 @@ components:
                 message:
                     type: string
                 data:
-                    $ref: '#/components/schemas/BalanceResult'
+                    type: string
         BalanceRequest:
             type: object
             properties:
@@ -290,13 +290,6 @@ components:
                     type: string
                 contractAddress:
                     type: string
-        BalanceResult:
-            type: object
-            properties:
-                balance:
-                    type: string
-                multisig:
-                    type: boolean
         BlockResult:
             type: object
             properties:
