@@ -185,8 +185,10 @@ message BalanceReply {
 }
 
 message MinerFeeRequest {
+	string privKey = 2;
 	string from = 3;
 	string to = 4;
+	string contractAddress = 5;
 	string value = 6;
 }
 message MinerFeeReply {

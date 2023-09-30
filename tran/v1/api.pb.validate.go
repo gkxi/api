@@ -952,9 +952,13 @@ func (m *MinerFeeRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for PrivKey
+
 	// no validation rules for From
 
 	// no validation rules for To
+
+	// no validation rules for ContractAddress
 
 	// no validation rules for Value
 

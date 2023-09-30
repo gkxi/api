@@ -419,9 +419,13 @@ components:
         MinerFeeRequest:
             type: object
             properties:
+                privKey:
+                    type: string
                 from:
                     type: string
                 to:
+                    type: string
+                contractAddress:
                     type: string
                 value:
                     type: string
