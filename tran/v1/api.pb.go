@@ -638,13 +638,13 @@ type SendTranRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Mnemonic        string `protobuf:"bytes,1,opt,name=mnemonic,proto3" json:"mnemonic,omitempty"`
-	PrivKey         string `protobuf:"bytes,2,opt,name=privKey,proto3" json:"privKey,omitempty"`
-	From            string `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
-	To              string `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
-	ContractAddress string `protobuf:"bytes,5,opt,name=contractAddress,proto3" json:"contractAddress,omitempty"`
-	Value           string `protobuf:"bytes,6,opt,name=value,proto3" json:"value,omitempty"`
-	ObjectId        string `protobuf:"bytes,7,opt,name=objectId,proto3" json:"objectId,omitempty"`
+	Mnemonic        string  `protobuf:"bytes,1,opt,name=mnemonic,proto3" json:"mnemonic,omitempty"`
+	PrivKey         string  `protobuf:"bytes,2,opt,name=privKey,proto3" json:"privKey,omitempty"`
+	From            string  `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
+	To              string  `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
+	ContractAddress string  `protobuf:"bytes,5,opt,name=contractAddress,proto3" json:"contractAddress,omitempty"`
+	Value           float64 `protobuf:"fixed64,6,opt,name=value,proto3" json:"value,omitempty"`
+	ObjectId        string  `protobuf:"bytes,7,opt,name=objectId,proto3" json:"objectId,omitempty"`
 }
 
 func (x *SendTranRequest) Reset() {
@@ -714,11 +714,11 @@ func (x *SendTranRequest) GetContractAddress() string {
 	return ""
 }
 
-func (x *SendTranRequest) GetValue() string {
+func (x *SendTranRequest) GetValue() float64 {
 	if x != nil {
 		return x.Value
 	}
-	return ""
+	return 0
 }
 
 func (x *SendTranRequest) GetObjectId() string {
@@ -1776,7 +1776,7 @@ var file_tran_v1_api_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x12, 0x28, 0x0a, 0x0f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x64,
 	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x63, 0x6f, 0x6e,
 	0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c,
 	0x75, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x18, 0x07,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x22, 0x36,
 	0x0a, 0x0e, 0x53, 0x65, 0x6e, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,

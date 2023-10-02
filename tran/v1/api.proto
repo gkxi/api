@@ -201,7 +201,7 @@ message SendTranRequest {
 	string from = 3;
 	string to = 4;
 	string contractAddress = 5;
-	string value = 6;
+	double value = 6;
 	string objectId = 7;
 }
 message  SendTranResult {
