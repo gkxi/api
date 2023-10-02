@@ -930,6 +930,218 @@ var _ interface {
 	ErrorName() string
 } = BalanceReplyValidationError{}
 
+// Validate checks the field values on MinerFee1Request with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *MinerFee1Request) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MinerFee1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// MinerFee1RequestMultiError, or nil if none found.
+func (m *MinerFee1Request) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MinerFee1Request) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Master
+
+	// no validation rules for GasAdd
+
+	if len(errors) > 0 {
+		return MinerFee1RequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// MinerFee1RequestMultiError is an error wrapping multiple validation errors
+// returned by MinerFee1Request.ValidateAll() if the designated constraints
+// aren't met.
+type MinerFee1RequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MinerFee1RequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MinerFee1RequestMultiError) AllErrors() []error { return m }
+
+// MinerFee1RequestValidationError is the validation error returned by
+// MinerFee1Request.Validate if the designated constraints aren't met.
+type MinerFee1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MinerFee1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MinerFee1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MinerFee1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MinerFee1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MinerFee1RequestValidationError) ErrorName() string { return "MinerFee1RequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MinerFee1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMinerFee1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MinerFee1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MinerFee1RequestValidationError{}
+
+// Validate checks the field values on MinerFee1Reply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MinerFee1Reply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MinerFee1Reply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MinerFee1ReplyMultiError,
+// or nil if none found.
+func (m *MinerFee1Reply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MinerFee1Reply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return MinerFee1ReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// MinerFee1ReplyMultiError is an error wrapping multiple validation errors
+// returned by MinerFee1Reply.ValidateAll() if the designated constraints
+// aren't met.
+type MinerFee1ReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MinerFee1ReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MinerFee1ReplyMultiError) AllErrors() []error { return m }
+
+// MinerFee1ReplyValidationError is the validation error returned by
+// MinerFee1Reply.Validate if the designated constraints aren't met.
+type MinerFee1ReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MinerFee1ReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MinerFee1ReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MinerFee1ReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MinerFee1ReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MinerFee1ReplyValidationError) ErrorName() string { return "MinerFee1ReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MinerFee1ReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMinerFee1Reply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MinerFee1ReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MinerFee1ReplyValidationError{}
+
 // Validate checks the field values on MinerFeeRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.

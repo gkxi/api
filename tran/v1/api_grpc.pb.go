@@ -22,6 +22,7 @@ const (
 	TranV1_ChainList_FullMethodName               = "/tran.v1.TranV1/ChainList"
 	TranV1_IsMultiSigAddress_FullMethodName       = "/tran.v1.TranV1/IsMultiSigAddress"
 	TranV1_Balance_FullMethodName                 = "/tran.v1.TranV1/Balance"
+	TranV1_MinerFee1_FullMethodName               = "/tran.v1.TranV1/MinerFee1"
 	TranV1_MinerFee_FullMethodName                = "/tran.v1.TranV1/MinerFee"
 	TranV1_SendTran_FullMethodName                = "/tran.v1.TranV1/SendTran"
 	TranV1_Height_FullMethodName                  = "/tran.v1.TranV1/Height"
@@ -37,6 +38,7 @@ type TranV1Client interface {
 	ChainList(ctx context.Context, in *ChainListRequest, opts ...grpc.CallOption) (*ChainListReply, error)
 	IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddressRequest, opts ...grpc.CallOption) (*IsMultiSigAddressReply, error)
 	Balance(ctx context.Context, in *BalanceRequest, opts ...grpc.CallOption) (*BalanceReply, error)
+	MinerFee1(ctx context.Context, in *MinerFee1Request, opts ...grpc.CallOption) (*MinerFee1Reply, error)
 	MinerFee(ctx context.Context, in *MinerFeeRequest, opts ...grpc.CallOption) (*MinerFeeReply, error)
 	SendTran(ctx context.Context, in *SendTranRequest, opts ...grpc.CallOption) (*SendTranReply, error)
 	Height(ctx context.Context, in *HeightRequest, opts ...grpc.CallOption) (*HeightReply, error)
@@ -74,6 +76,15 @@ func (c *tranV1Client) IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddr
 func (c *tranV1Client) Balance(ctx context.Context, in *BalanceRequest, opts ...grpc.CallOption) (*BalanceReply, error) {
 	out := new(BalanceReply)
 	err := c.cc.Invoke(ctx, TranV1_Balance_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tranV1Client) MinerFee1(ctx context.Context, in *MinerFee1Request, opts ...grpc.CallOption) (*MinerFee1Reply, error) {
+	out := new(MinerFee1Reply)
+	err := c.cc.Invoke(ctx, TranV1_MinerFee1_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -141,6 +152,7 @@ type TranV1Server interface {
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
+	MinerFee1(context.Context, *MinerFee1Request) (*MinerFee1Reply, error)
 	MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error)
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
@@ -162,6 +174,9 @@ func (UnimplementedTranV1Server) IsMultiSigAddress(context.Context, *IsMultiSigA
 }
 func (UnimplementedTranV1Server) Balance(context.Context, *BalanceRequest) (*BalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Balance not implemented")
+}
+func (UnimplementedTranV1Server) MinerFee1(context.Context, *MinerFee1Request) (*MinerFee1Reply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MinerFee1 not implemented")
 }
 func (UnimplementedTranV1Server) MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MinerFee not implemented")
@@ -244,6 +259,24 @@ func _TranV1_Balance_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranV1Server).Balance(ctx, req.(*BalanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranV1_MinerFee1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MinerFee1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranV1Server).MinerFee1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranV1_MinerFee1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranV1Server).MinerFee1(ctx, req.(*MinerFee1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -374,6 +407,10 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Balance",
 			Handler:    _TranV1_Balance_Handler,
+		},
+		{
+			MethodName: "MinerFee1",
+			Handler:    _TranV1_MinerFee1_Handler,
 		},
 		{
 			MethodName: "MinerFee",

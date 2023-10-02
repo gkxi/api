@@ -30,6 +30,42 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /chain/free/{master}/{gasAdd}:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_MinerFee1
+            parameters:
+                - name: master
+                  in: path
+                  required: true
+                  schema:
+                    type: boolean
+                - name: gasAdd
+                  in: path
+                  required: true
+                  schema:
+                    type: number
+                    format: double
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/MinerFee1Request'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MinerFee1Reply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /chain/getBalance:
         post:
             tags:
@@ -411,6 +447,25 @@ components:
             properties:
                 walletAddress:
                     type: string
+        MinerFee1Reply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: string
+        MinerFee1Request:
+            type: object
+            properties:
+                master:
+                    type: boolean
+                gasAdd:
+                    type: number
+                    format: double
         MinerFeeReply:
             type: object
             properties:

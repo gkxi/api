@@ -27,6 +27,7 @@ const OperationTranV1GetBlockHashByHeight = "/tran.v1.TranV1/GetBlockHashByHeigh
 const OperationTranV1Height = "/tran.v1.TranV1/Height"
 const OperationTranV1IsMultiSigAddress = "/tran.v1.TranV1/IsMultiSigAddress"
 const OperationTranV1MinerFee = "/tran.v1.TranV1/MinerFee"
+const OperationTranV1MinerFee1 = "/tran.v1.TranV1/MinerFee1"
 const OperationTranV1SendTran = "/tran.v1.TranV1/SendTran"
 
 type TranV1HTTPServer interface {
@@ -38,6 +39,7 @@ type TranV1HTTPServer interface {
 	Height(context.Context, *HeightRequest) (*HeightReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
 	MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error)
+	MinerFee1(context.Context, *MinerFee1Request) (*MinerFee1Reply, error)
 	SendTran(context.Context, *SendTranRequest) (*SendTranReply, error)
 }
 
@@ -46,6 +48,7 @@ func RegisterTranV1HTTPServer(s *http.Server, srv TranV1HTTPServer) {
 	r.POST("/chain/list/{chainCode}", _TranV1_ChainList0_HTTP_Handler(srv))
 	r.POST("/chain/multisig", _TranV1_IsMultiSigAddress0_HTTP_Handler(srv))
 	r.POST("/chain/getBalance", _TranV1_Balance0_HTTP_Handler(srv))
+	r.POST("/chain/free/{master}/{gasAdd}", _TranV1_MinerFee10_HTTP_Handler(srv))
 	r.POST("/chain/minerfee", _TranV1_MinerFee0_HTTP_Handler(srv))
 	r.POST("/chain/transferTo", _TranV1_SendTran0_HTTP_Handler(srv))
 	r.POST("/chain/getLastBlockHeight", _TranV1_Height0_HTTP_Handler(srv))
@@ -119,6 +122,31 @@ func _TranV1_Balance0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) 
 			return err
 		}
 		reply := out.(*BalanceReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TranV1_MinerFee10_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in MinerFee1Request
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTranV1MinerFee1)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.MinerFee1(ctx, req.(*MinerFee1Request))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*MinerFee1Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -273,6 +301,7 @@ type TranV1HTTPClient interface {
 	Height(ctx context.Context, req *HeightRequest, opts ...http.CallOption) (rsp *HeightReply, err error)
 	IsMultiSigAddress(ctx context.Context, req *IsMultiSigAddressRequest, opts ...http.CallOption) (rsp *IsMultiSigAddressReply, err error)
 	MinerFee(ctx context.Context, req *MinerFeeRequest, opts ...http.CallOption) (rsp *MinerFeeReply, err error)
+	MinerFee1(ctx context.Context, req *MinerFee1Request, opts ...http.CallOption) (rsp *MinerFee1Reply, err error)
 	SendTran(ctx context.Context, req *SendTranRequest, opts ...http.CallOption) (rsp *SendTranReply, err error)
 }
 
@@ -380,6 +409,19 @@ func (c *TranV1HTTPClientImpl) MinerFee(ctx context.Context, in *MinerFeeRequest
 	pattern := "/chain/minerfee"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTranV1MinerFee))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *TranV1HTTPClientImpl) MinerFee1(ctx context.Context, in *MinerFee1Request, opts ...http.CallOption) (*MinerFee1Reply, error) {
+	var out MinerFee1Reply
+	pattern := "/chain/free/{master}/{gasAdd}"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTranV1MinerFee1))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
