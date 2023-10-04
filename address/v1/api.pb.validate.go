@@ -187,9 +187,11 @@ func (m *NewBip44Result) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for WalletAddressPKH
+	// no validation rules for WalletAddressSH
 
 	// no validation rules for WalletAddressWPKH
+
+	// no validation rules for WalletAddressTaproot
 
 	if len(errors) > 0 {
 		return NewBip44ResultMultiError(errors)

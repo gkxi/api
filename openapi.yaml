@@ -514,9 +514,11 @@ components:
                     type: string
                 id:
                     type: string
-                walletAddressPKH:
+                walletAddressSH:
                     type: string
                 walletAddressWPKH:
+                    type: string
+                walletAddressTaproot:
                     type: string
         SendTranReply:
             type: object
