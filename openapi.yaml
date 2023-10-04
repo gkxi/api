@@ -516,9 +516,15 @@ components:
                     type: string
                 walletAddressSH:
                     type: string
+                privKeySH:
+                    type: string
                 walletAddressWPKH:
                     type: string
+                privKeyWPKH:
+                    type: string
                 walletAddressTaproot:
+                    type: string
+                privKeyTaproot:
                     type: string
         SendTranReply:
             type: object

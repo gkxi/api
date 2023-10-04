@@ -78,8 +78,11 @@ message NewBip44Result {
 	string privKey = 2;
 	string id = 3;
 	string walletAddressSH = 4;
-	string walletAddressWPKH = 5;
-	string walletAddressTaproot = 6;
+	string privKeySH = 5;
+	string walletAddressWPKH = 6;
+	string privKeyWPKH = 7;
+	string walletAddressTaproot = 8;
+	string privKeyTaproot = 9;
 }
 
 message NewBip44Reply {
