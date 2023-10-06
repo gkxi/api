@@ -212,7 +212,10 @@ message MinerFeeRequest {
 	string value = 6;
 }
 message MinerFeeReply {
-	string fee = 1;
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	string data = 4;
 }
 
 message SendTranRequest {

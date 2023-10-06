@@ -1274,7 +1274,13 @@ func (m *MinerFeeReply) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Fee
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	// no validation rules for Data
 
 	if len(errors) > 0 {
 		return MinerFeeReplyMultiError(errors)

@@ -469,7 +469,13 @@ components:
         MinerFeeReply:
             type: object
             properties:
-                fee:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
                     type: string
         MinerFeeRequest:
             type: object
