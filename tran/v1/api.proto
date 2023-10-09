@@ -195,7 +195,7 @@ message BalanceReply {
 
 message MinerFee1Request {
 	bool master = 2;
-	double gasAdd = 3;
+	int64 gasAdd = 3;
 }
 message MinerFee1Reply {
 	bool success = 1;

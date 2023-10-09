@@ -45,8 +45,8 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: number
-                    format: double
+                    type: integer
+                    format: int64
             requestBody:
                 content:
                     application/json:
@@ -464,8 +464,8 @@ components:
                 master:
                     type: boolean
                 gasAdd:
-                    type: number
-                    format: double
+                    type: integer
+                    format: int64
         MinerFeeReply:
             type: object
             properties:
