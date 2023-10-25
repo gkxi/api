@@ -2939,6 +2939,245 @@ var _ interface {
 	ErrorName() string
 } = GetBlockHashByHeightReplyValidationError{}
 
+// Validate checks the field values on GetTxByHashRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetTxByHashRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTxByHashRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTxByHashRequestMultiError, or nil if none found.
+func (m *GetTxByHashRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTxByHashRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Hash
+
+	if len(errors) > 0 {
+		return GetTxByHashRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTxByHashRequestMultiError is an error wrapping multiple validation errors
+// returned by GetTxByHashRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetTxByHashRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTxByHashRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTxByHashRequestMultiError) AllErrors() []error { return m }
+
+// GetTxByHashRequestValidationError is the validation error returned by
+// GetTxByHashRequest.Validate if the designated constraints aren't met.
+type GetTxByHashRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTxByHashRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTxByHashRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTxByHashRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTxByHashRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTxByHashRequestValidationError) ErrorName() string {
+	return "GetTxByHashRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTxByHashRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTxByHashRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTxByHashRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTxByHashRequestValidationError{}
+
+// Validate checks the field values on GetTxByHashReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetTxByHashReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTxByHashReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTxByHashReplyMultiError, or nil if none found.
+func (m *GetTxByHashReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTxByHashReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetTxByHashReplyValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetTxByHashReplyValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetTxByHashReplyValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetTxByHashReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTxByHashReplyMultiError is an error wrapping multiple validation errors
+// returned by GetTxByHashReply.ValidateAll() if the designated constraints
+// aren't met.
+type GetTxByHashReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTxByHashReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTxByHashReplyMultiError) AllErrors() []error { return m }
+
+// GetTxByHashReplyValidationError is the validation error returned by
+// GetTxByHashReply.Validate if the designated constraints aren't met.
+type GetTxByHashReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTxByHashReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTxByHashReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTxByHashReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTxByHashReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTxByHashReplyValidationError) ErrorName() string { return "GetTxByHashReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetTxByHashReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTxByHashReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTxByHashReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTxByHashReplyValidationError{}
+
 // Validate checks the field values on BtcBlockResult with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

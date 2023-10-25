@@ -129,6 +129,15 @@ service TranV1 {
 			summary: "发送交易";
 		};
 	};
+	rpc GetTxByHash (GetTxByHashRequest) returns (GetTxByHashReply) {
+		option (google.api.http) = {
+			post: "/chain/tx/{hash}"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "发送交易";
+		};
+	};
 	rpc EthGetBlockHashByHeight (GetBlockHashByHeightRequest) returns (TxResult) {
 		option (google.api.http) = {
 			post: "/chain/getBlockHashByHeightEth/{height}"
@@ -301,6 +310,18 @@ message GetBlockHashByHeightReply {
 	string message = 3;
 	BlockResult data = 4;
 }
+
+message GetTxByHashRequest {
+	string hash = 1;
+}
+
+message GetTxByHashReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	google.protobuf.Any data = 4;
+}
+
 
 message BtcBlockResult {
 	string hash = 1;
