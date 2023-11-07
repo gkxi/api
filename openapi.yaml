@@ -557,6 +557,9 @@ components:
                 index:
                     type: integer
                     format: uint32
+                ty:
+                    type: integer
+                    format: enum
         NewBip44Result:
             type: object
             properties:
