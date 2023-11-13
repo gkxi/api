@@ -72,3 +72,39 @@ func IsInvalidScriptType(err error) bool {
 func ErrorInvalidScriptType(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_InvalidScriptType.String(), fmt.Sprintf(format, args...))
 }
+
+func IsErrMnemonic(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ErrMnemonic.String() && e.Code == 500
+}
+
+func ErrorErrMnemonic(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ErrMnemonic.String(), fmt.Sprintf(format, args...))
+}
+
+func IsErrPrivateKey(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ErrPrivateKey.String() && e.Code == 500
+}
+
+func ErrorErrPrivateKey(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ErrPrivateKey.String(), fmt.Sprintf(format, args...))
+}
+
+func IsInvalidBlock(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_InvalidBlock.String() && e.Code == 500
+}
+
+func ErrorInvalidBlock(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_InvalidBlock.String(), fmt.Sprintf(format, args...))
+}

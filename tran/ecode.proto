@@ -24,4 +24,10 @@ enum ErrorReason {
   TxOutNil = 10001;
 
   InvalidScriptType = 10002;
+
+  ErrMnemonic = 10003;
+
+  ErrPrivateKey = 10004;
+
+  InvalidBlock = 10005;
 }
