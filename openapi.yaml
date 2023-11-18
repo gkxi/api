@@ -30,6 +30,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /chain/createAddressByMnemonic1:
+        post:
+            tags:
+                - AddressV1
+            operationId: AddressV1_NewBip441
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NewBip44Request'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/NewBip441Reply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /chain/free/{master}/{gasAdd}:
         post:
             tags:
@@ -536,6 +560,19 @@ components:
                     type: string
                 value:
                     type: string
+        NewBip441Reply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/NewBip44Result'
         NewBip44Reply:
             type: object
             properties:
@@ -560,6 +597,9 @@ components:
                 ty:
                     type: integer
                     format: enum
+                flag:
+                    type: integer
+                    format: uint32
         NewBip44Result:
             type: object
             properties:

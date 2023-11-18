@@ -20,14 +20,17 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationAddressV1NewBip44 = "/address.v1.AddressV1/NewBip44"
+const OperationAddressV1NewBip441 = "/address.v1.AddressV1/NewBip441"
 
 type AddressV1HTTPServer interface {
 	NewBip44(context.Context, *NewBip44Request) (*NewBip44Reply, error)
+	NewBip441(context.Context, *NewBip44Request) (*NewBip441Reply, error)
 }
 
 func RegisterAddressV1HTTPServer(s *http.Server, srv AddressV1HTTPServer) {
 	r := s.Route("/")
 	r.POST("/chain/createAddressByMnemonic", _AddressV1_NewBip440_HTTP_Handler(srv))
+	r.POST("/chain/createAddressByMnemonic1", _AddressV1_NewBip4410_HTTP_Handler(srv))
 }
 
 func _AddressV1_NewBip440_HTTP_Handler(srv AddressV1HTTPServer) func(ctx http.Context) error {
@@ -52,8 +55,31 @@ func _AddressV1_NewBip440_HTTP_Handler(srv AddressV1HTTPServer) func(ctx http.Co
 	}
 }
 
+func _AddressV1_NewBip4410_HTTP_Handler(srv AddressV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in NewBip44Request
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAddressV1NewBip441)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.NewBip441(ctx, req.(*NewBip44Request))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*NewBip441Reply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type AddressV1HTTPClient interface {
 	NewBip44(ctx context.Context, req *NewBip44Request, opts ...http.CallOption) (rsp *NewBip44Reply, err error)
+	NewBip441(ctx context.Context, req *NewBip44Request, opts ...http.CallOption) (rsp *NewBip441Reply, err error)
 }
 
 type AddressV1HTTPClientImpl struct {
@@ -69,6 +95,19 @@ func (c *AddressV1HTTPClientImpl) NewBip44(ctx context.Context, in *NewBip44Requ
 	pattern := "/chain/createAddressByMnemonic"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAddressV1NewBip44))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *AddressV1HTTPClientImpl) NewBip441(ctx context.Context, in *NewBip44Request, opts ...http.CallOption) (*NewBip441Reply, error) {
+	var out NewBip441Reply
+	pattern := "/chain/createAddressByMnemonic1"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAddressV1NewBip441))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
