@@ -416,6 +416,112 @@ var _ interface {
 	ErrorName() string
 } = NewBip44ReplyValidationError{}
 
+// Validate checks the field values on NewBip441Result with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *NewBip441Result) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on NewBip441Result with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// NewBip441ResultMultiError, or nil if none found.
+func (m *NewBip441Result) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *NewBip441Result) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for WalletAddress
+
+	// no validation rules for PrivKey
+
+	// no validation rules for Id
+
+	if len(errors) > 0 {
+		return NewBip441ResultMultiError(errors)
+	}
+
+	return nil
+}
+
+// NewBip441ResultMultiError is an error wrapping multiple validation errors
+// returned by NewBip441Result.ValidateAll() if the designated constraints
+// aren't met.
+type NewBip441ResultMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m NewBip441ResultMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m NewBip441ResultMultiError) AllErrors() []error { return m }
+
+// NewBip441ResultValidationError is the validation error returned by
+// NewBip441Result.Validate if the designated constraints aren't met.
+type NewBip441ResultValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e NewBip441ResultValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e NewBip441ResultValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e NewBip441ResultValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e NewBip441ResultValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e NewBip441ResultValidationError) ErrorName() string { return "NewBip441ResultValidationError" }
+
+// Error satisfies the builtin error interface
+func (e NewBip441ResultValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sNewBip441Result.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = NewBip441ResultValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = NewBip441ResultValidationError{}
+
 // Validate checks the field values on NewBip441Reply with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

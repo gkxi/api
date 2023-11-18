@@ -572,7 +572,16 @@ components:
                 data:
                     type: array
                     items:
-                        $ref: '#/components/schemas/NewBip44Result'
+                        $ref: '#/components/schemas/NewBip441Result'
+        NewBip441Result:
+            type: object
+            properties:
+                walletAddress:
+                    type: string
+                privKey:
+                    type: string
+                id:
+                    type: string
         NewBip44Reply:
             type: object
             properties:

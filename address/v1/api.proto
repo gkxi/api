@@ -108,9 +108,15 @@ message NewBip44Reply {
 	NewBip44Result data = 4;
 }
 
+message NewBip441Result {
+	string walletAddress = 1;
+	string privKey = 2;
+	string id = 3;
+}
+
 message NewBip441Reply {
 	bool success = 1;
 	string code = 2;
 	string message = 3;
-	repeated NewBip44Result data = 4;
+	repeated NewBip441Result data = 4;
 }
