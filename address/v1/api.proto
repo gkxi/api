@@ -85,8 +85,9 @@ message NewBip44Request {
 	string mnemonic = 1 [(validate.rules).string.min_len = 2];
 	string pass = 2 [(validate.rules).string.min_len = 0];
 	uint32 index = 5;
-	CreateTy ty = 6;
-	uint32 flag = 7;
+	uint32 count = 6;
+	CreateTy ty = 7;
+	uint32 flag = 8;
 }
 
 message NewBip44Result {

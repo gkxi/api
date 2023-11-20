@@ -603,6 +603,9 @@ components:
                 index:
                     type: integer
                     format: uint32
+                count:
+                    type: integer
+                    format: uint32
                 ty:
                     type: integer
                     format: enum

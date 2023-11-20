@@ -81,6 +81,8 @@ func (m *NewBip44Request) validate(all bool) error {
 
 	// no validation rules for Index
 
+	// no validation rules for Count
+
 	// no validation rules for Ty
 
 	// no validation rules for Flag
