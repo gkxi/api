@@ -88,6 +88,7 @@ message NewBip44Request {
 	uint32 count = 6;
 	CreateTy ty = 7;
 	uint32 flag = 8;
+	uint32 opid = 9;
 }
 
 message NewBip44Result {
@@ -107,6 +108,7 @@ message NewBip44Reply {
 	string code = 2;
 	string message = 3;
 	NewBip44Result data = 4;
+	uint32 opid = 5;
 }
 
 message NewBip441Result {
@@ -120,4 +122,5 @@ message NewBip441Reply {
 	string code = 2;
 	string message = 3;
 	repeated NewBip441Result data = 4;
+	uint32 opid = 5;
 }

@@ -573,6 +573,9 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/NewBip441Result'
+                opid:
+                    type: integer
+                    format: uint32
         NewBip441Result:
             type: object
             properties:
@@ -593,6 +596,9 @@ components:
                     type: string
                 data:
                     $ref: '#/components/schemas/NewBip44Result'
+                opid:
+                    type: integer
+                    format: uint32
         NewBip44Request:
             type: object
             properties:
@@ -610,6 +616,9 @@ components:
                     type: integer
                     format: enum
                 flag:
+                    type: integer
+                    format: uint32
+                opid:
                     type: integer
                     format: uint32
         NewBip44Result:

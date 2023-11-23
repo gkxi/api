@@ -87,6 +87,8 @@ func (m *NewBip44Request) validate(all bool) error {
 
 	// no validation rules for Flag
 
+	// no validation rules for Opid
+
 	if len(errors) > 0 {
 		return NewBip44RequestMultiError(errors)
 	}
@@ -340,6 +342,8 @@ func (m *NewBip44Reply) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Opid
+
 	if len(errors) > 0 {
 		return NewBip44ReplyMultiError(errors)
 	}
@@ -585,6 +589,8 @@ func (m *NewBip441Reply) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for Opid
 
 	if len(errors) > 0 {
 		return NewBip441ReplyMultiError(errors)
