@@ -105,6 +105,7 @@ enum ChainType {
   TypeZcash = 133;
   TypeLisk = 134;
   TypeFactomIdentity = 135;
+  TypeRipple = 144;
   TypeBitcoinCash = 145;
   TypeSolana = 501;
   TypeMatic = 966;
