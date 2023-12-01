@@ -30,4 +30,8 @@ enum ErrorReason {
   ErrPrivateKey = 10004;
 
   InvalidBlock = 10005;
+
+  BalanceNotEnough = 10006;
+
+  TxFailed = 10007;
 }

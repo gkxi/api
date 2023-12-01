@@ -108,3 +108,27 @@ func IsInvalidBlock(err error) bool {
 func ErrorInvalidBlock(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_InvalidBlock.String(), fmt.Sprintf(format, args...))
 }
+
+func IsBalanceNotEnough(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_BalanceNotEnough.String() && e.Code == 500
+}
+
+func ErrorBalanceNotEnough(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_BalanceNotEnough.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTxFailed(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_TxFailed.String() && e.Code == 500
+}
+
+func ErrorTxFailed(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_TxFailed.String(), fmt.Sprintf(format, args...))
+}
