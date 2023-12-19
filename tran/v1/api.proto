@@ -205,6 +205,7 @@ message BalanceReply {
 message MinerFee1Request {
 	bool master = 2;
 	int64 gasAdd = 3;
+	int64	multiple = 4;
 }
 message MinerFee1Reply {
 	bool success = 1;
@@ -235,6 +236,7 @@ message SendTranRequest {
 	string contractAddress = 5;
 	double value = 6;
 	string objectId = 7;
+	int64	multiple = 8;
 }
 message  SendTranResult {
 	string hash = 1;

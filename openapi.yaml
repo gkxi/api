@@ -536,6 +536,9 @@ components:
                 gasAdd:
                     type: integer
                     format: int64
+                multiple:
+                    type: integer
+                    format: int64
         MinerFeeReply:
             type: object
             properties:
@@ -672,6 +675,9 @@ components:
                     format: double
                 objectId:
                     type: string
+                multiple:
+                    type: integer
+                    format: int64
         SendTranResult:
             type: object
             properties:

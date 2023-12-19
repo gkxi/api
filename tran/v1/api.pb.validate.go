@@ -956,6 +956,8 @@ func (m *MinerFee1Request) validate(all bool) error {
 
 	// no validation rules for GasAdd
 
+	// no validation rules for Multiple
+
 	if len(errors) > 0 {
 		return MinerFee1RequestMultiError(errors)
 	}
@@ -1395,6 +1397,8 @@ func (m *SendTranRequest) validate(all bool) error {
 	// no validation rules for Value
 
 	// no validation rules for ObjectId
+
+	// no validation rules for Multiple
 
 	if len(errors) > 0 {
 		return SendTranRequestMultiError(errors)
