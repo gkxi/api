@@ -218,7 +218,7 @@ message MinerFeeRequest {
 	string from = 3;
 	string to = 4;
 	string contractAddress = 5;
-	string value = 6;
+	double value = 6;
 }
 message MinerFeeReply {
 	bool success = 1;

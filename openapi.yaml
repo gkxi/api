@@ -559,7 +559,8 @@ components:
                 contractAddress:
                     type: string
                 value:
-                    type: string
+                    type: number
+                    format: double
         NewBip441Reply:
             type: object
             properties:
