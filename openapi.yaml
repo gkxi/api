@@ -537,8 +537,8 @@ components:
                     type: integer
                     format: int64
                 multiple:
-                    type: integer
-                    format: int64
+                    type: number
+                    format: double
         MinerFeeReply:
             type: object
             properties:
@@ -562,6 +562,9 @@ components:
                 contractAddress:
                     type: string
                 value:
+                    type: number
+                    format: double
+                multiple:
                     type: number
                     format: double
         NewBip441Reply:
@@ -676,8 +679,8 @@ components:
                 objectId:
                     type: string
                 multiple:
-                    type: integer
-                    format: int64
+                    type: number
+                    format: double
         SendTranResult:
             type: object
             properties:

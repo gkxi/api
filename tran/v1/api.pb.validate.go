@@ -1176,6 +1176,8 @@ func (m *MinerFeeRequest) validate(all bool) error {
 
 	// no validation rules for Value
 
+	// no validation rules for Multiple
+
 	if len(errors) > 0 {
 		return MinerFeeRequestMultiError(errors)
 	}
