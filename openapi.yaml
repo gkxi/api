@@ -69,8 +69,8 @@ paths:
                   in: path
                   required: true
                   schema:
-                    type: integer
-                    format: int64
+                    type: number
+                    format: double
             requestBody:
                 content:
                     application/json:
@@ -534,8 +534,8 @@ components:
                 master:
                     type: boolean
                 gasAdd:
-                    type: integer
-                    format: int64
+                    type: number
+                    format: double
                 multiple:
                     type: number
                     format: double
