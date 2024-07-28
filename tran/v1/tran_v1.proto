@@ -75,6 +75,15 @@ service TranV1 {
 			summary: "余额";
 		};
 	};
+	rpc CreateAssociatedAccount(CreateAssociatedAccountRequest) returns (CreateAssociatedAccountReply) {
+		option (google.api.http) = {
+			post: "/chain/createAssociatedAccount"
+			body: "*"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			summary: "创建关联账号，针对token";
+		};
+	};
 	rpc Balance (BalanceRequest) returns (BalanceReply) {
 		option (google.api.http) = {
 			post: "/chain/getBalance"
@@ -186,6 +195,18 @@ message IsMultiSigAddressReply {
 	bool data = 4;
 }
 
+message CreateAssociatedAccountRequest {
+	string privKey = 1;
+	string contract_address = 2;
+}
+message CreateAssociatedAccountResult {}
+message CreateAssociatedAccountReply {
+	bool success = 1;
+	string code = 2;
+	string message = 3;
+	string data = 4;
+}
+
 message BalanceRequest {
 	string walletAddress = 1 [(validate.rules).string.min_len = 2];
 	string contractAddress = 2;
@@ -271,6 +292,7 @@ message TxResult {
 	string value = 7;
 	string fee = 9;
 	int64 date = 10;
+	string version = 11;
 }
 
 message Utxo {

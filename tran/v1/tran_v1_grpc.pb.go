@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	TranV1_ChainList_FullMethodName               = "/tran.v1.TranV1/ChainList"
 	TranV1_IsMultiSigAddress_FullMethodName       = "/tran.v1.TranV1/IsMultiSigAddress"
+	TranV1_CreateAssociatedAccount_FullMethodName = "/tran.v1.TranV1/CreateAssociatedAccount"
 	TranV1_Balance_FullMethodName                 = "/tran.v1.TranV1/Balance"
 	TranV1_MinerFee1_FullMethodName               = "/tran.v1.TranV1/MinerFee1"
 	TranV1_MinerFee_FullMethodName                = "/tran.v1.TranV1/MinerFee"
@@ -38,6 +39,7 @@ const (
 type TranV1Client interface {
 	ChainList(ctx context.Context, in *ChainListRequest, opts ...grpc.CallOption) (*ChainListReply, error)
 	IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddressRequest, opts ...grpc.CallOption) (*IsMultiSigAddressReply, error)
+	CreateAssociatedAccount(ctx context.Context, in *CreateAssociatedAccountRequest, opts ...grpc.CallOption) (*CreateAssociatedAccountReply, error)
 	Balance(ctx context.Context, in *BalanceRequest, opts ...grpc.CallOption) (*BalanceReply, error)
 	MinerFee1(ctx context.Context, in *MinerFee1Request, opts ...grpc.CallOption) (*MinerFee1Reply, error)
 	MinerFee(ctx context.Context, in *MinerFeeRequest, opts ...grpc.CallOption) (*MinerFeeReply, error)
@@ -69,6 +71,15 @@ func (c *tranV1Client) ChainList(ctx context.Context, in *ChainListRequest, opts
 func (c *tranV1Client) IsMultiSigAddress(ctx context.Context, in *IsMultiSigAddressRequest, opts ...grpc.CallOption) (*IsMultiSigAddressReply, error) {
 	out := new(IsMultiSigAddressReply)
 	err := c.cc.Invoke(ctx, TranV1_IsMultiSigAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tranV1Client) CreateAssociatedAccount(ctx context.Context, in *CreateAssociatedAccountRequest, opts ...grpc.CallOption) (*CreateAssociatedAccountReply, error) {
+	out := new(CreateAssociatedAccountReply)
+	err := c.cc.Invoke(ctx, TranV1_CreateAssociatedAccount_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,6 +173,7 @@ func (c *tranV1Client) BtcGetBlockHashByHeight(ctx context.Context, in *GetBlock
 type TranV1Server interface {
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
 	IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error)
+	CreateAssociatedAccount(context.Context, *CreateAssociatedAccountRequest) (*CreateAssociatedAccountReply, error)
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
 	MinerFee1(context.Context, *MinerFee1Request) (*MinerFee1Reply, error)
 	MinerFee(context.Context, *MinerFeeRequest) (*MinerFeeReply, error)
@@ -183,6 +195,9 @@ func (UnimplementedTranV1Server) ChainList(context.Context, *ChainListRequest) (
 }
 func (UnimplementedTranV1Server) IsMultiSigAddress(context.Context, *IsMultiSigAddressRequest) (*IsMultiSigAddressReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsMultiSigAddress not implemented")
+}
+func (UnimplementedTranV1Server) CreateAssociatedAccount(context.Context, *CreateAssociatedAccountRequest) (*CreateAssociatedAccountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAssociatedAccount not implemented")
 }
 func (UnimplementedTranV1Server) Balance(context.Context, *BalanceRequest) (*BalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Balance not implemented")
@@ -256,6 +271,24 @@ func _TranV1_IsMultiSigAddress_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranV1Server).IsMultiSigAddress(ctx, req.(*IsMultiSigAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranV1_CreateAssociatedAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAssociatedAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranV1Server).CreateAssociatedAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranV1_CreateAssociatedAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranV1Server).CreateAssociatedAccount(ctx, req.(*CreateAssociatedAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -436,6 +469,10 @@ var TranV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsMultiSigAddress",
 			Handler:    _TranV1_IsMultiSigAddress_Handler,
+		},
+		{
+			MethodName: "CreateAssociatedAccount",
+			Handler:    _TranV1_CreateAssociatedAccount_Handler,
 		},
 		{
 			MethodName: "Balance",

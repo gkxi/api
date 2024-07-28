@@ -54,6 +54,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /chain/createAssociatedAccount:
+        post:
+            tags:
+                - TranV1
+            operationId: TranV1_CreateAssociatedAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateAssociatedAccountRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateAssociatedAccountReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /chain/free/{master}/{gasAdd}:
         post:
             tags:
@@ -446,6 +470,24 @@ components:
                     type: string
                 contractAddress:
                     type: string
+        CreateAssociatedAccountReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                code:
+                    type: string
+                message:
+                    type: string
+                data:
+                    type: string
+        CreateAssociatedAccountRequest:
+            type: object
+            properties:
+                privKey:
+                    type: string
+                contractAddress:
+                    type: string
         GetBlockHashByHeightReply:
             type: object
             properties:
@@ -726,6 +768,8 @@ components:
                 date:
                     type: integer
                     format: int64
+                version:
+                    type: string
         TxUtxo:
             type: object
             properties:

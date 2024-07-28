@@ -22,6 +22,7 @@ const _ = http.SupportPackageIsVersion1
 const OperationTranV1Balance = "/tran.v1.TranV1/Balance"
 const OperationTranV1BtcGetBlockHashByHeight = "/tran.v1.TranV1/BtcGetBlockHashByHeight"
 const OperationTranV1ChainList = "/tran.v1.TranV1/ChainList"
+const OperationTranV1CreateAssociatedAccount = "/tran.v1.TranV1/CreateAssociatedAccount"
 const OperationTranV1EthGetBlockHashByHeight = "/tran.v1.TranV1/EthGetBlockHashByHeight"
 const OperationTranV1GetBlockHashByHeight = "/tran.v1.TranV1/GetBlockHashByHeight"
 const OperationTranV1GetTxByHash = "/tran.v1.TranV1/GetTxByHash"
@@ -35,6 +36,7 @@ type TranV1HTTPServer interface {
 	Balance(context.Context, *BalanceRequest) (*BalanceReply, error)
 	BtcGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*BtcGetBlockHashByHeightReply, error)
 	ChainList(context.Context, *ChainListRequest) (*ChainListReply, error)
+	CreateAssociatedAccount(context.Context, *CreateAssociatedAccountRequest) (*CreateAssociatedAccountReply, error)
 	EthGetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*TxResult, error)
 	GetBlockHashByHeight(context.Context, *GetBlockHashByHeightRequest) (*GetBlockHashByHeightReply, error)
 	GetTxByHash(context.Context, *GetTxByHashRequest) (*GetTxByHashReply, error)
@@ -49,6 +51,7 @@ func RegisterTranV1HTTPServer(s *http.Server, srv TranV1HTTPServer) {
 	r := s.Route("/")
 	r.POST("/chain/list/{chainCode}", _TranV1_ChainList0_HTTP_Handler(srv))
 	r.POST("/chain/multisig", _TranV1_IsMultiSigAddress0_HTTP_Handler(srv))
+	r.POST("/chain/createAssociatedAccount", _TranV1_CreateAssociatedAccount0_HTTP_Handler(srv))
 	r.POST("/chain/getBalance", _TranV1_Balance0_HTTP_Handler(srv))
 	r.POST("/chain/free/{master}/{gasAdd}", _TranV1_MinerFee10_HTTP_Handler(srv))
 	r.POST("/chain/minerfee", _TranV1_MinerFee0_HTTP_Handler(srv))
@@ -103,6 +106,28 @@ func _TranV1_IsMultiSigAddress0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http
 			return err
 		}
 		reply := out.(*IsMultiSigAddressReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _TranV1_CreateAssociatedAccount0_HTTP_Handler(srv TranV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in CreateAssociatedAccountRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationTranV1CreateAssociatedAccount)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.CreateAssociatedAccount(ctx, req.(*CreateAssociatedAccountRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*CreateAssociatedAccountReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -324,6 +349,7 @@ type TranV1HTTPClient interface {
 	Balance(ctx context.Context, req *BalanceRequest, opts ...http.CallOption) (rsp *BalanceReply, err error)
 	BtcGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *BtcGetBlockHashByHeightReply, err error)
 	ChainList(ctx context.Context, req *ChainListRequest, opts ...http.CallOption) (rsp *ChainListReply, err error)
+	CreateAssociatedAccount(ctx context.Context, req *CreateAssociatedAccountRequest, opts ...http.CallOption) (rsp *CreateAssociatedAccountReply, err error)
 	EthGetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *TxResult, err error)
 	GetBlockHashByHeight(ctx context.Context, req *GetBlockHashByHeightRequest, opts ...http.CallOption) (rsp *GetBlockHashByHeightReply, err error)
 	GetTxByHash(ctx context.Context, req *GetTxByHashRequest, opts ...http.CallOption) (rsp *GetTxByHashReply, err error)
@@ -373,6 +399,19 @@ func (c *TranV1HTTPClientImpl) ChainList(ctx context.Context, in *ChainListReque
 	pattern := "/chain/list/{chainCode}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTranV1ChainList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *TranV1HTTPClientImpl) CreateAssociatedAccount(ctx context.Context, in *CreateAssociatedAccountRequest, opts ...http.CallOption) (*CreateAssociatedAccountReply, error) {
+	var out CreateAssociatedAccountReply
+	pattern := "/chain/createAssociatedAccount"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationTranV1CreateAssociatedAccount))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

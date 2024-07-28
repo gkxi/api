@@ -606,6 +606,327 @@ var _ interface {
 	ErrorName() string
 } = IsMultiSigAddressReplyValidationError{}
 
+// Validate checks the field values on CreateAssociatedAccountRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CreateAssociatedAccountRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateAssociatedAccountRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateAssociatedAccountRequestMultiError, or nil if none found.
+func (m *CreateAssociatedAccountRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateAssociatedAccountRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for PrivKey
+
+	// no validation rules for ContractAddress
+
+	if len(errors) > 0 {
+		return CreateAssociatedAccountRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateAssociatedAccountRequestMultiError is an error wrapping multiple
+// validation errors returned by CreateAssociatedAccountRequest.ValidateAll()
+// if the designated constraints aren't met.
+type CreateAssociatedAccountRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateAssociatedAccountRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateAssociatedAccountRequestMultiError) AllErrors() []error { return m }
+
+// CreateAssociatedAccountRequestValidationError is the validation error
+// returned by CreateAssociatedAccountRequest.Validate if the designated
+// constraints aren't met.
+type CreateAssociatedAccountRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateAssociatedAccountRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateAssociatedAccountRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateAssociatedAccountRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateAssociatedAccountRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateAssociatedAccountRequestValidationError) ErrorName() string {
+	return "CreateAssociatedAccountRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateAssociatedAccountRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateAssociatedAccountRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateAssociatedAccountRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateAssociatedAccountRequestValidationError{}
+
+// Validate checks the field values on CreateAssociatedAccountResult with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CreateAssociatedAccountResult) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateAssociatedAccountResult with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateAssociatedAccountResultMultiError, or nil if none found.
+func (m *CreateAssociatedAccountResult) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateAssociatedAccountResult) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return CreateAssociatedAccountResultMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateAssociatedAccountResultMultiError is an error wrapping multiple
+// validation errors returned by CreateAssociatedAccountResult.ValidateAll()
+// if the designated constraints aren't met.
+type CreateAssociatedAccountResultMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateAssociatedAccountResultMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateAssociatedAccountResultMultiError) AllErrors() []error { return m }
+
+// CreateAssociatedAccountResultValidationError is the validation error
+// returned by CreateAssociatedAccountResult.Validate if the designated
+// constraints aren't met.
+type CreateAssociatedAccountResultValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateAssociatedAccountResultValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateAssociatedAccountResultValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateAssociatedAccountResultValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateAssociatedAccountResultValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateAssociatedAccountResultValidationError) ErrorName() string {
+	return "CreateAssociatedAccountResultValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateAssociatedAccountResultValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateAssociatedAccountResult.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateAssociatedAccountResultValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateAssociatedAccountResultValidationError{}
+
+// Validate checks the field values on CreateAssociatedAccountReply with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CreateAssociatedAccountReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateAssociatedAccountReply with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CreateAssociatedAccountReplyMultiError, or nil if none found.
+func (m *CreateAssociatedAccountReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateAssociatedAccountReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for Code
+
+	// no validation rules for Message
+
+	// no validation rules for Data
+
+	if len(errors) > 0 {
+		return CreateAssociatedAccountReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateAssociatedAccountReplyMultiError is an error wrapping multiple
+// validation errors returned by CreateAssociatedAccountReply.ValidateAll() if
+// the designated constraints aren't met.
+type CreateAssociatedAccountReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateAssociatedAccountReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateAssociatedAccountReplyMultiError) AllErrors() []error { return m }
+
+// CreateAssociatedAccountReplyValidationError is the validation error returned
+// by CreateAssociatedAccountReply.Validate if the designated constraints
+// aren't met.
+type CreateAssociatedAccountReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateAssociatedAccountReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateAssociatedAccountReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateAssociatedAccountReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateAssociatedAccountReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateAssociatedAccountReplyValidationError) ErrorName() string {
+	return "CreateAssociatedAccountReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateAssociatedAccountReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateAssociatedAccountReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateAssociatedAccountReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateAssociatedAccountReplyValidationError{}
+
 // Validate checks the field values on BalanceRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -2070,6 +2391,8 @@ func (m *TxResult) validate(all bool) error {
 	// no validation rules for Fee
 
 	// no validation rules for Date
+
+	// no validation rules for Version
 
 	if len(errors) > 0 {
 		return TxResultMultiError(errors)

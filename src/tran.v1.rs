@@ -47,6 +47,29 @@ pub struct IsMultiSigAddressReply {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CreateAssociatedAccountRequest {
+    #[prost(string, tag = "1")]
+    pub priv_key: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub contract_address: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CreateAssociatedAccountResult {}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CreateAssociatedAccountReply {
+    #[prost(bool, tag = "1")]
+    pub success: bool,
+    #[prost(string, tag = "2")]
+    pub code: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub data: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BalanceRequest {
     #[prost(string, tag = "1")]
     pub wallet_address: ::prost::alloc::string::String,
@@ -205,6 +228,8 @@ pub struct TxResult {
     pub fee: ::prost::alloc::string::String,
     #[prost(int64, tag = "10")]
     pub date: i64,
+    #[prost(string, tag = "11")]
+    pub version: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -449,6 +474,31 @@ pub mod tran_v1_client {
                 .insert(GrpcMethod::new("tran.v1.TranV1", "IsMultiSigAddress"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn create_associated_account(
+            &mut self,
+            request: impl tonic::IntoRequest<super::CreateAssociatedAccountRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::CreateAssociatedAccountReply>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/tran.v1.TranV1/CreateAssociatedAccount",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("tran.v1.TranV1", "CreateAssociatedAccount"));
+            self.inner.unary(req, path, codec).await
+        }
         pub async fn balance(
             &mut self,
             request: impl tonic::IntoRequest<super::BalanceRequest>,
@@ -661,6 +711,13 @@ pub mod tran_v1_server {
             tonic::Response<super::IsMultiSigAddressReply>,
             tonic::Status,
         >;
+        async fn create_associated_account(
+            &self,
+            request: tonic::Request<super::CreateAssociatedAccountRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::CreateAssociatedAccountReply>,
+            tonic::Status,
+        >;
         async fn balance(
             &self,
             request: tonic::Request<super::BalanceRequest>,
@@ -861,6 +918,55 @@ pub mod tran_v1_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = IsMultiSigAddressSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/tran.v1.TranV1/CreateAssociatedAccount" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreateAssociatedAccountSvc<T: TranV1>(pub Arc<T>);
+                    impl<
+                        T: TranV1,
+                    > tonic::server::UnaryService<super::CreateAssociatedAccountRequest>
+                    for CreateAssociatedAccountSvc<T> {
+                        type Response = super::CreateAssociatedAccountReply;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::CreateAssociatedAccountRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as TranV1>::create_associated_account(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CreateAssociatedAccountSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
