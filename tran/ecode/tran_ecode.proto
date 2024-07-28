@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package address;
+package tran.ecode;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -8,7 +8,7 @@ import "validate/validate.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "errors/errors.proto";
 
-option go_package = "github.com/gkxi/api/address;address";
+option go_package = "github.com/gkxi/api/tran/ecode;ecode";
 
 enum ErrorReason {
   // 设置缺省错误码
@@ -19,4 +19,19 @@ enum ErrorReason {
 
   CONTENT_MISSING = 1 [(errors.code) = 400];
 
+  Invalid_Pub_ECDSA = 10000;
+
+  TxOutNil = 10001;
+
+  InvalidScriptType = 10002;
+
+  ErrMnemonic = 10003;
+
+  ErrPrivateKey = 10004;
+
+  InvalidBlock = 10005;
+
+  BalanceNotEnough = 10006;
+
+  TxFailed = 10007;
 }

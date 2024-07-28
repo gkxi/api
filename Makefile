@@ -43,3 +43,6 @@ api:
            ./tran/v1/api.proto \
            ./base/types.proto
 
+.PHONY: build
+build:
+	RUST_BACKTRACE=1 cargo build

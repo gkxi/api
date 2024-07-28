@@ -1,0 +1,14 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+prost = "0.12.3"
+prost-types = "0.12.3"
+tonic = "0.10.2"
+serde = { version= "1.0.163", features = ["derive"]}
+validator = { version = "0.16", features = ["derive"] }
+
+[build-dependencies]
+tonic-build = "0.10.2"
