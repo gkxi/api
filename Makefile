@@ -22,8 +22,8 @@ errors:
            --proto_path=$(PWD)/../third_party \
            --go_out=paths=source_relative:. \
            --go-errors_out=paths=source_relative:. \
-           ./address/ecode.proto \
-           ./tran/ecode.proto
+           ./address/ecode/address_ecode.proto \
+           ./tran/ecode/tran_ecode.proto
 
 .PHONY: api
 api:
@@ -39,8 +39,8 @@ api:
            --go-errors_out=paths=source_relative:. \
            --validate_out=lang=go,paths=source_relative:. \
            --openapi_out=. \
-           ./address/v1/api.proto \
-           ./tran/v1/api.proto \
+           ./address/v1/address_v1.proto \
+           ./tran/v1/tran_v1.proto \
            ./base/types.proto
 
 .PHONY: build
