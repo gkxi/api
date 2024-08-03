@@ -1962,6 +1962,8 @@ func (m *SendTranResult) validate(all bool) error {
 
 	// no validation rules for Value
 
+	// no validation rules for Fee
+
 	if len(errors) > 0 {
 		return SendTranResultMultiError(errors)
 	}
