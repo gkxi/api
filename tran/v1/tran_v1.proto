@@ -243,11 +243,17 @@ message MinerFeeRequest {
 	double value = 6;
 	double multiple = 8;
 }
+
+message MinerFeeResult {
+	int64 satsPerByte = 1;
+	int64 fee = 2;
+}
+
 message MinerFeeReply {
 	bool success = 1;
 	string code = 2;
 	string message = 3;
-	string data = 4;
+	MinerFeeResult data = 4;
 }
 
 message SendTranRequest {
@@ -259,6 +265,7 @@ message SendTranRequest {
 	double value = 6;
 	string objectId = 7;
 	double multiple = 8;
+	int64 satsPerByte = 9;
 }
 message  SendTranResult {
 	string hash = 1;

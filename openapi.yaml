@@ -591,7 +591,7 @@ components:
                 message:
                     type: string
                 data:
-                    type: string
+                    $ref: '#/components/schemas/MinerFeeResult'
         MinerFeeRequest:
             type: object
             properties:
@@ -609,6 +609,15 @@ components:
                 multiple:
                     type: number
                     format: double
+        MinerFeeResult:
+            type: object
+            properties:
+                satsPerByte:
+                    type: integer
+                    format: int64
+                fee:
+                    type: integer
+                    format: int64
         NewBip441Reply:
             type: object
             properties:
@@ -723,6 +732,9 @@ components:
                 multiple:
                     type: number
                     format: double
+                satsPerByte:
+                    type: integer
+                    format: int64
         SendTranResult:
             type: object
             properties:
