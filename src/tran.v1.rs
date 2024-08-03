@@ -136,6 +136,14 @@ pub struct MinerFeeRequest {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MinerFeeResult {
+    #[prost(int64, tag = "1")]
+    pub sats_per_byte: i64,
+    #[prost(int64, tag = "2")]
+    pub fee: i64,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MinerFeeReply {
     #[prost(bool, tag = "1")]
     pub success: bool,
@@ -143,8 +151,8 @@ pub struct MinerFeeReply {
     pub code: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub message: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub data: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub data: ::core::option::Option<MinerFeeResult>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -165,6 +173,8 @@ pub struct SendTranRequest {
     pub object_id: ::prost::alloc::string::String,
     #[prost(double, tag = "8")]
     pub multiple: f64,
+    #[prost(int64, tag = "9")]
+    pub sats_per_byte: i64,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -173,6 +183,8 @@ pub struct SendTranResult {
     pub hash: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub msg: ::prost::alloc::string::String,
+    #[prost(string, tag = "6")]
+    pub value: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

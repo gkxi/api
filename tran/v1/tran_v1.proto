@@ -270,6 +270,7 @@ message SendTranRequest {
 message  SendTranResult {
 	string hash = 1;
 	string msg = 2;
+	string value = 6;
 }
 message SendTranReply {
 	bool success = 1;
