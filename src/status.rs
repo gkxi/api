@@ -1,9 +1,8 @@
 use std::fmt::{Display, Formatter};
-use crate::address::ecode::ErrorReason;
 use crate::errors::Status;
 
 impl Status {
-    fn new(reason: ErrorReason, message: &str) -> Status {
+    fn new(reason: &str, message: &str) -> Status {
         Status {
             code: 500,
             reason: reason.to_string(),
@@ -29,12 +28,13 @@ impl Display for Status {
 #[cfg(test)]
 mod tests {
     use crate::address;
+
     use super::*;
 
     #[test]
     fn it_works() {
-        let s = Status::new(address::ecode::ErrorReason::UserNotFound, "");
-        let s1 = Status::new(address::ecode::ErrorReason::UserNotFound, "");
+        let s = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
+        let s1 = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
         assert_eq!(s, s1);
     }
 }
