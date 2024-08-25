@@ -57,7 +57,16 @@ func (m *ChainListRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ChainCode
+	if utf8.RuneCountInString(m.GetChainCode()) < 1 {
+		err := ChainListRequestValidationError{
+			field:  "ChainCode",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return ChainListRequestMultiError(errors)
@@ -159,11 +168,38 @@ func (m *ChainListResult) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ChainCode
+	if utf8.RuneCountInString(m.GetChainCode()) < 1 {
+		err := ChainListResultValidationError{
+			field:  "ChainCode",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Code
+	if utf8.RuneCountInString(m.GetCode()) < 1 {
+		err := ChainListResultValidationError{
+			field:  "Code",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for ContractAddress
+	if utf8.RuneCountInString(m.GetContractAddress()) < 1 {
+		err := ChainListResultValidationError{
+			field:  "ContractAddress",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return ChainListResultMultiError(errors)
@@ -628,9 +664,27 @@ func (m *CreateAssociatedAccountRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PrivKey
+	if utf8.RuneCountInString(m.GetPrivKey()) < 1 {
+		err := CreateAssociatedAccountRequestValidationError{
+			field:  "PrivKey",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for ContractAddress
+	if utf8.RuneCountInString(m.GetContractAddress()) < 1 {
+		err := CreateAssociatedAccountRequestValidationError{
+			field:  "ContractAddress",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return CreateAssociatedAccountRequestMultiError(errors)
@@ -1842,13 +1896,40 @@ func (m *SendTranRequest) validate(all bool) error {
 
 	// no validation rules for PrivKey
 
-	// no validation rules for From
+	if utf8.RuneCountInString(m.GetFrom()) < 1 {
+		err := SendTranRequestValidationError{
+			field:  "From",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for To
+	if utf8.RuneCountInString(m.GetTo()) < 1 {
+		err := SendTranRequestValidationError{
+			field:  "To",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	// no validation rules for ContractAddress
 
-	// no validation rules for Value
+	if m.GetValue() <= 0 {
+		err := SendTranRequestValidationError{
+			field:  "Value",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	// no validation rules for ObjectId
 

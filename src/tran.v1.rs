@@ -183,8 +183,10 @@ pub struct SendTranResult {
     pub hash: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub msg: ::prost::alloc::string::String,
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "3")]
     pub value: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub fee: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

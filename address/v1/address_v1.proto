@@ -11,116 +11,116 @@ import "errors/errors.proto";
 
 option go_package = "github.com/gkxi/api/address/v1;v1";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-	info: {
-		title: "信息服务文档";
-		version: "1.0";
-	};
-	schemes: HTTP;
-	schemes: HTTPS;
-	consumes: "application/json";
-	consumes: "application/x-foo-mime";
-	produces: "application/json";
-	produces: "application/x-foo-mime";
-	security_definitions: {
-		security: {
-			key: "BasicAuth";
-			value: {
-				type: TYPE_BASIC;
-			}
-		}
-	}
-	responses: {
-		key: "500";
-		value: {
-			description: "Server error";
-			headers: {
-				key: "X-Correlation-Id"
-				value: {
-					description: "Unique event identifier for server requests"
-					type: "string"
-					format: "uuid"
-					default: "\"2438ac3c-37eb-4902-adef-ed16b4431030\""
-					pattern: "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"
-				}
-			};
-			schema: {
-				json_schema: {
-					ref: ".errors.Error"
-				}
-			}
-		}
-	}
+    info: {
+        title: "信息服务文档";
+        version: "1.0";
+    };
+    schemes: HTTP;
+    schemes: HTTPS;
+    consumes: "application/json";
+    consumes: "application/x-foo-mime";
+    produces: "application/json";
+    produces: "application/x-foo-mime";
+    security_definitions: {
+        security: {
+            key: "BasicAuth";
+            value: {
+                type: TYPE_BASIC;
+            }
+        }
+    }
+    responses: {
+        key: "500";
+        value: {
+            description: "Server error";
+            headers: {
+                key: "X-Correlation-Id"
+                value: {
+                    description: "Unique event identifier for server requests"
+                    type: "string"
+                    format: "uuid"
+                    default: "\"2438ac3c-37eb-4902-adef-ed16b4431030\""
+                    pattern: "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$"
+                }
+            };
+            schema: {
+                json_schema: {
+                    ref: ".errors.Error"
+                }
+            }
+        }
+    }
 };
 
 service AddressV1 {
-	option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
-		description: "address API接口"
-	};
-	rpc NewBip44 (NewBip44Request) returns (NewBip44Reply) {
-		option (google.api.http) = {
-			post: "/chain/createAddressByMnemonic"
-			body: "*"
-		};
-		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-			summary: "生新地址";
-		};
-	};
-	rpc NewBip441 (NewBip44Request) returns (NewBip441Reply) {
-		option (google.api.http) = {
-			post: "/chain/createAddressByMnemonic1"
-			body: "*"
-		};
-		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-			summary: "生新地址";
-		};
-	};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+        description: "address API接口"
+    };
+    rpc NewBip44 (NewBip44Request) returns (NewBip44Reply) {
+        option (google.api.http) = {
+            post: "/chain/createAddressByMnemonic"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "生新地址";
+        };
+    };
+    rpc NewBip441 (NewBip44Request) returns (NewBip441Reply) {
+        option (google.api.http) = {
+            post: "/chain/createAddressByMnemonic1"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "生新地址";
+        };
+    };
 }
 
 enum CreateTy {
-		Mnemonic = 0;
-		PrivateKey = 1;
+    Mnemonic = 0;
+    PrivateKey = 1;
 }
 
 message NewBip44Request {
-	string mnemonic = 1 [(validate.rules).string.min_len = 2];
-	string pass = 2 [(validate.rules).string.min_len = 0];
-	uint32 index = 5;
-	uint32 count = 6;
-	CreateTy ty = 7;
-	uint32 flag = 8;
-	uint32 opid = 9;
+    string mnemonic = 1 [(validate.rules).string.min_len = 2];
+    string pass = 2 [(validate.rules).string.min_len = 0];
+    uint32 index = 5;
+    uint32 count = 6;
+    CreateTy ty = 7;
+    uint32 flag = 8;
+    uint32 opid = 9;
 }
 
 message NewBip44Result {
-	string walletAddress = 1;
-	string privKey = 2;
-	string id = 3;
-	string walletAddressSH = 4;
-	string privKeySH = 5;
-	string walletAddressWPKH = 6;
-	string privKeyWPKH = 7;
-	string walletAddressTaproot = 8;
-	string privKeyTaproot = 9;
+    string walletAddress = 1;
+    string privKey = 2;
+    string id = 3;
+    string walletAddressSH = 4;
+    string privKeySH = 5;
+    string walletAddressWPKH = 6;
+    string privKeyWPKH = 7;
+    string walletAddressTaproot = 8;
+    string privKeyTaproot = 9;
 }
 
 message NewBip44Reply {
-	bool success = 1;
-	string code = 2;
-	string message = 3;
-	NewBip44Result data = 4;
-	uint32 opid = 5;
+    bool success = 1;
+    string code = 2;
+    string message = 3;
+    NewBip44Result data = 4;
+    uint32 opid = 5;
 }
 
 message NewBip441Result {
-	string walletAddress = 1;
-	string privKey = 2;
-	string id = 3;
+    string walletAddress = 1;
+    string privKey = 2;
+    string id = 3;
 }
 
 message NewBip441Reply {
-	bool success = 1;
-	string code = 2;
-	string message = 3;
-	repeated NewBip441Result data = 4;
-	uint32 opid = 5;
+    bool success = 1;
+    string code = 2;
+    string message = 3;
+    repeated NewBip441Result data = 4;
+    uint32 opid = 5;
 }

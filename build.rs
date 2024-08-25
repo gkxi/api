@@ -6,7 +6,7 @@ fn main() {
         "address/v1/address_v1.proto",
         "base/types.proto",
         "tran/ecode/tran_ecode.proto",
-        "tran/v1/tran_v1.proto",];
+        "tran/v1/tran_v1.proto", ];
     let includes = &[
         "./",
         "/Users/test/go/pkg/mod/github.com/go-bamboo/pkg@v0.0.39-0.20231128085640-d77909357dc6",
@@ -16,12 +16,13 @@ fn main() {
         "/Users/test/Documents/GitHub/metax/api/../third_party"];
     let out_dir = PathBuf::from("./src");
     tonic_build::configure()
+        .type_attribute(".address.v1.NewBip44Request", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
+        .field_attribute(".address.v1.NewBip44Request.mnemonic", "#[validate(length(min = 1))]")
         .out_dir(out_dir)
         // .compile_well_known_types(true)
-        .compile(protos,includes)
+        .compile(protos, includes)
         .unwrap();
 }
 
 #[cfg(not(target_os = "macos"))]
-fn main() {
-}
+fn main() {}
