@@ -257,21 +257,21 @@ message MinerFeeReply {
 }
 
 message SendTranRequest {
-    string mnemonic = 1;
-    string privKey = 2;
+    optional string mnemonic = 1;
+    optional string privKey = 2;
     string from = 3 [(validate.rules).string = {min_len: 1}];
     string to = 4 [(validate.rules).string = {min_len: 1}];
-    string contractAddress = 5;
+    optional string contractAddress = 5;
     double value = 6 [(validate.rules).double = {gt: 0}];
-    string objectId = 7;
-    double multiple = 8;
-    int64 satsPerByte = 9;
+    optional string objectId = 7;
+    optional double multiple = 8;
+    optional int64 satsPerByte = 9;
 }
 message SendTranResult {
     string hash = 1;
     string msg = 2;
-    string value = 3;
-    string fee = 4;
+    optional string value = 3;
+    optional string fee = 4;
 }
 message SendTranReply {
     bool success = 1;

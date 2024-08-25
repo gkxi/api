@@ -7,6 +7,8 @@ use axum::{
 use tonic::Code;
 use crate::errors::Status;
 use serde_json::json;
+use serde_json::Value::String;
+use tonic::metadata::MetadataMap;
 
 impl Status {
     fn new(reason: &str, message: &str) -> Status {
@@ -44,14 +46,16 @@ impl From<tonic::Status> for Status {
 
 impl Into<tonic::Status> for Status {
     fn into(self) -> tonic::Status {
-        tonic::Status::new(Code::Internal, self.message)
+        let mut mm = MetadataMap::new();
+        mm.insert("reason", self.reason.parse().unwrap());
+        tonic::Status::with_metadata(Code::Internal, self.message, mm)
     }
 }
 
 impl IntoResponse for Status {
     fn into_response(self) -> Response {
         let body = Json(json!(self));
-        (StatusCode::INTERNAL_SERVER_ERROR, body).into_response()
+        (StatusCode::from_u16(self.code as u16).unwrap(), body).into_response()
     }
 }
 

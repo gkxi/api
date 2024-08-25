@@ -40,6 +40,7 @@ fn main() {
         .type_attribute(".tran.v1.MinerFeeResult", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
         .type_attribute(".tran.v1.MinerFeeReply", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
         .type_attribute(".tran.v1.SendTranRequest", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
+        .field_attribute(".tran.v1.SendTranRequest.privKey", "#[serde(alias = \"privKey\")]")
         .type_attribute(".tran.v1.SendTranResult", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
         .type_attribute(".tran.v1.SendTranReply", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")
         .type_attribute(".tran.v1.HeightRequest", "#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]")

@@ -1892,10 +1892,6 @@ func (m *SendTranRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Mnemonic
-
-	// no validation rules for PrivKey
-
 	if utf8.RuneCountInString(m.GetFrom()) < 1 {
 		err := SendTranRequestValidationError{
 			field:  "From",
@@ -1918,8 +1914,6 @@ func (m *SendTranRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for ContractAddress
-
 	if m.GetValue() <= 0 {
 		err := SendTranRequestValidationError{
 			field:  "Value",
@@ -1931,11 +1925,29 @@ func (m *SendTranRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for ObjectId
+	if m.Mnemonic != nil {
+		// no validation rules for Mnemonic
+	}
 
-	// no validation rules for Multiple
+	if m.PrivKey != nil {
+		// no validation rules for PrivKey
+	}
 
-	// no validation rules for SatsPerByte
+	if m.ContractAddress != nil {
+		// no validation rules for ContractAddress
+	}
+
+	if m.ObjectId != nil {
+		// no validation rules for ObjectId
+	}
+
+	if m.Multiple != nil {
+		// no validation rules for Multiple
+	}
+
+	if m.SatsPerByte != nil {
+		// no validation rules for SatsPerByte
+	}
 
 	if len(errors) > 0 {
 		return SendTranRequestMultiError(errors)
@@ -2041,9 +2053,13 @@ func (m *SendTranResult) validate(all bool) error {
 
 	// no validation rules for Msg
 
-	// no validation rules for Value
+	if m.Value != nil {
+		// no validation rules for Value
+	}
 
-	// no validation rules for Fee
+	if m.Fee != nil {
+		// no validation rules for Fee
+	}
 
 	if len(errors) > 0 {
 		return SendTranResultMultiError(errors)

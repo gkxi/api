@@ -174,24 +174,25 @@ pub struct MinerFeeReply {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SendTranRequest {
-    #[prost(string, tag = "1")]
-    pub mnemonic: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub priv_key: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub mnemonic: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "2")]
+    #[serde(alias = "privKey")]
+    pub priv_key: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, tag = "3")]
     pub from: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub to: ::prost::alloc::string::String,
-    #[prost(string, tag = "5")]
-    pub contract_address: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub contract_address: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(double, tag = "6")]
     pub value: f64,
-    #[prost(string, tag = "7")]
-    pub object_id: ::prost::alloc::string::String,
-    #[prost(double, tag = "8")]
-    pub multiple: f64,
-    #[prost(int64, tag = "9")]
-    pub sats_per_byte: i64,
+    #[prost(string, optional, tag = "7")]
+    pub object_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(double, optional, tag = "8")]
+    pub multiple: ::core::option::Option<f64>,
+    #[prost(int64, optional, tag = "9")]
+    pub sats_per_byte: ::core::option::Option<i64>,
 }
 #[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -201,10 +202,10 @@ pub struct SendTranResult {
     pub hash: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub msg: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub value: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub fee: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub value: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "4")]
+    pub fee: ::core::option::Option<::prost::alloc::string::String>,
 }
 #[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
