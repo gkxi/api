@@ -8,6 +8,8 @@ pub mod address {
 
 pub mod base;
 
+pub mod errors;
+
 #[path =""]
 pub mod tran {
     #[path ="tran.ecode.rs"]

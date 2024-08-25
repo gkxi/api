@@ -320,7 +320,6 @@ pub struct TxBalance {
     #[prost(message, repeated, tag = "2")]
     pub balance_changes: ::prost::alloc::vec::Vec<BalanceChanges>,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BlockResult {
@@ -333,7 +332,6 @@ pub struct BlockResult {
     #[prost(string, tag = "4")]
     pub next_cursor: ::prost::alloc::string::String,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockHashByHeightReply {
@@ -346,14 +344,12 @@ pub struct GetBlockHashByHeightReply {
     #[prost(message, optional, tag = "4")]
     pub data: ::core::option::Option<BlockResult>,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxByHashRequest {
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxByHashReply {
@@ -366,7 +362,6 @@ pub struct GetTxByHashReply {
     #[prost(message, optional, tag = "4")]
     pub data: ::core::option::Option<::prost_types::Any>,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BtcBlockResult {
@@ -379,7 +374,6 @@ pub struct BtcBlockResult {
     #[prost(string, tag = "4")]
     pub next_cursor: ::prost::alloc::string::String,
 }
-#[derive(serde::Serialize, serde::Deserialize, validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BtcGetBlockHashByHeightReply {
