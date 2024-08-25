@@ -81,13 +81,19 @@ func (m *NewBip44Request) validate(all bool) error {
 
 	// no validation rules for Index
 
-	// no validation rules for Count
-
 	// no validation rules for Ty
 
-	// no validation rules for Flag
+	if m.Count != nil {
+		// no validation rules for Count
+	}
 
-	// no validation rules for Opid
+	if m.Flag != nil {
+		// no validation rules for Flag
+	}
+
+	if m.Opid != nil {
+		// no validation rules for Opid
+	}
 
 	if len(errors) > 0 {
 		return NewBip44RequestMultiError(errors)

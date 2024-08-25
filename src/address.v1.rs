@@ -10,14 +10,14 @@ pub struct NewBip44Request {
     pub pass: ::prost::alloc::string::String,
     #[prost(uint32, tag = "5")]
     pub index: u32,
-    #[prost(uint32, tag = "6")]
-    pub count: u32,
+    #[prost(uint32, optional, tag = "6")]
+    pub count: ::core::option::Option<u32>,
     #[prost(enumeration = "CreateTy", tag = "7")]
     pub ty: i32,
-    #[prost(uint32, tag = "8")]
-    pub flag: u32,
-    #[prost(uint32, tag = "9")]
-    pub opid: u32,
+    #[prost(uint32, optional, tag = "8")]
+    pub flag: ::core::option::Option<u32>,
+    #[prost(uint32, optional, tag = "9")]
+    pub opid: ::core::option::Option<u32>,
 }
 #[derive(::serde::Serialize, ::serde::Deserialize, ::validator::Validate)]
 #[allow(clippy::derive_partial_eq_without_eq)]
