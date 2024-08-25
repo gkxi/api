@@ -16,7 +16,7 @@ fn main() {
         "/Users/test/Documents/GitHub/metax/api/../third_party"];
     let out_dir = PathBuf::from("./src");
     tonic_build::configure()
-        .type_attribute(".errors.Status", "#[derive(::thiserror::Error)]")
+        .type_attribute(".errors.Status", "#[derive(::thiserror::Error, ::serde::Serialize, ::serde::Deserialize)]")
         .type_attribute(".address.v1.NewBip44Request", "#[derive(::serde::Serialize, ::serde::Deserialize, ::validator::Validate)]")
         .field_attribute(".address.v1.NewBip44Request.mnemonic", "#[validate(length(min = 1))]")
         .type_attribute(".address.v1.NewBip44Result", "#[derive(::serde::Serialize, ::serde::Deserialize, ::validator::Validate)]")
