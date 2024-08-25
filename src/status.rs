@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+use tonic::Code;
 use crate::errors::Status;
 
 impl Status {
@@ -24,6 +25,22 @@ impl Display for Status {
     }
 }
 
+impl From<tonic::Status> for Status {
+    fn from(value: tonic::Status) -> Self {
+        Status {
+            code: 500,
+            reason: value.code().to_string(),
+            message: value.message().to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl Into<tonic::Status> for Status {
+    fn into(self) -> tonic::Status {
+        tonic::Status::new(Code::Internal, self.message)
+    }
+}
 
 #[cfg(test)]
 mod tests {
