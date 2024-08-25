@@ -9,6 +9,7 @@ prost-types = "0.12.3"
 tonic = "0.10.2"
 serde = { version= "1.0.163", features = ["derive"]}
 validator = { version = "0.16", features = ["derive"] }
+thiserror = { version = "1.0.40" }
 
 [build-dependencies]
 tonic-build = "0.10.2"
