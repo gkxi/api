@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter};
+use std::fmt::{Display, Formatter, write};
 use axum::{
     http::StatusCode,
     Json,
@@ -29,7 +29,7 @@ impl Status {
 
 impl Display for Status {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.reason.as_str())
+        write!(f, "code: {}, reason: {}, message: {} md: {:?}", self.code, self.reason, self.message, self.metadata)
     }
 }
 
