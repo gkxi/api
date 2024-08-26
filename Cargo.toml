@@ -14,5 +14,9 @@ thiserror = { version = "1.0.40" }
 axum = { version = "0.7.2", features = ['default', 'macros'] }
 bytes = "1.6.1"
 
+# solana
+solana-sdk = "1.18.14"
+solana-client = "1.18.14"
+
 [build-dependencies]
 tonic-build = "0.10.2"

@@ -13,6 +13,7 @@ pub enum ErrorReason {
     InvalidBlock = 10005,
     BalanceNotEnough = 10006,
     TxFailed = 10007,
+    Solana = 10008,
 }
 impl ErrorReason {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -31,6 +32,7 @@ impl ErrorReason {
             ErrorReason::InvalidBlock => "InvalidBlock",
             ErrorReason::BalanceNotEnough => "BalanceNotEnough",
             ErrorReason::TxFailed => "TxFailed",
+            ErrorReason::Solana => "Solana",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -46,6 +48,7 @@ impl ErrorReason {
             "InvalidBlock" => Some(Self::InvalidBlock),
             "BalanceNotEnough" => Some(Self::BalanceNotEnough),
             "TxFailed" => Some(Self::TxFailed),
+            "Solana" => Some(Self::Solana),
             _ => None,
         }
     }

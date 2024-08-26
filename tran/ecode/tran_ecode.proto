@@ -34,4 +34,6 @@ enum ErrorReason {
   BalanceNotEnough = 10006;
 
   TxFailed = 10007;
+
+  Solana = 10008;
 }
