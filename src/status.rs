@@ -1,31 +1,27 @@
-use std::fmt::{Display, Formatter, write};
+use std::fmt::{Display, Formatter};
+
 use axum::{
     http::StatusCode,
     Json,
     response::{IntoResponse, Response},
 };
-use tonic::Code;
-use crate::errors::Status;
+use bytes::Bytes;
 use serde_json::json;
-use serde_json::Value::String;
+use tonic::Code;
 use tonic::metadata::MetadataMap;
+
+use crate::errors::Status;
 
 impl Status {
     fn new(reason: &str, message: &str) -> Status {
         Status {
-            code: 500,
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
             reason: reason.to_string(),
-            message: "".to_string(),
+            message: message.to_string(),
             metadata: Default::default(),
         }
     }
 }
-
-// impl PartialEq for Status {
-//     fn eq(&self, other: &Self) -> bool {
-//         self.code == other.code && self.reason == other.reason
-//     }
-// }
 
 impl Display for Status {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -35,20 +31,46 @@ impl Display for Status {
 
 impl From<tonic::Status> for Status {
     fn from(value: tonic::Status) -> Self {
-        Status {
-            code: 500,
-            reason: value.code().to_string(),
+        let code = match value.code() {
+            Code::Ok => StatusCode::OK,
+            Code::Cancelled => StatusCode::NOT_FOUND,
+            Code::Unknown => StatusCode::NOT_FOUND,
+            Code::InvalidArgument => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::DeadlineExceeded => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::NotFound => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::AlreadyExists => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::PermissionDenied => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::ResourceExhausted => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::FailedPrecondition => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::Aborted => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::OutOfRange => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::Unimplemented => StatusCode::NOT_FOUND,
+            Code::Internal => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::Unavailable => StatusCode::SERVICE_UNAVAILABLE,
+            Code::DataLoss => StatusCode::INTERNAL_SERVER_ERROR,
+            Code::Unauthenticated => StatusCode::UNAUTHORIZED,
+        };
+        let mut s = Status {
+            code: code.as_u16() as i32,
+            reason: code.to_string(),
             message: value.message().to_string(),
             metadata: Default::default(),
+        };
+        if let Ok(ss) = serde_json::from_slice::<Status>(value.details()) {
+            s.reason = ss.reason
         }
+        s
     }
 }
 
 impl Into<tonic::Status> for Status {
     fn into(self) -> tonic::Status {
+        let body = serde_json::to_vec(&self).unwrap();
         let mut mm = MetadataMap::new();
-        mm.insert("reason", self.reason.parse().unwrap());
-        tonic::Status::with_metadata(Code::Internal, self.message, mm)
+        // for (k, v) in self.metadata {
+        //     mm.insert(k.parse().unwrap(), v.parse().unwrap());
+        // }
+        tonic::Status::with_details_and_metadata(Code::Internal, self.message, Bytes::from(body), mm)
     }
 }
 
@@ -66,9 +88,16 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let s = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
-        let s1 = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
-        assert_eq!(s, s1);
+    fn test_status_eq() {
+        let a = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
+        let b = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "");
+        assert_eq!(a, b);
+    }
+
+    #[test]
+    fn test_status_eq1() {
+        let a = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "a");
+        let b = Status::new(address::ecode::ErrorReason::UserNotFound.as_str_name(), "b");
+        assert_ne!(a, b);
     }
 }
