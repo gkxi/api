@@ -36,4 +36,8 @@ enum ErrorReason {
   TxFailed = 10007;
 
   Solana = 10008;
+
+  AssetNotFound = 10009;
+
+  SplClientToken = 10010;
 }

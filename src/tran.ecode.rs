@@ -14,6 +14,8 @@ pub enum ErrorReason {
     BalanceNotEnough = 10006,
     TxFailed = 10007,
     Solana = 10008,
+    AssetNotFound = 10009,
+    SplClientToken = 10010,
 }
 impl ErrorReason {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -33,6 +35,8 @@ impl ErrorReason {
             ErrorReason::BalanceNotEnough => "BalanceNotEnough",
             ErrorReason::TxFailed => "TxFailed",
             ErrorReason::Solana => "Solana",
+            ErrorReason::AssetNotFound => "AssetNotFound",
+            ErrorReason::SplClientToken => "SplClientToken",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -49,6 +53,8 @@ impl ErrorReason {
             "BalanceNotEnough" => Some(Self::BalanceNotEnough),
             "TxFailed" => Some(Self::TxFailed),
             "Solana" => Some(Self::Solana),
+            "AssetNotFound" => Some(Self::AssetNotFound),
+            "SplClientToken" => Some(Self::SplClientToken),
             _ => None,
         }
     }
