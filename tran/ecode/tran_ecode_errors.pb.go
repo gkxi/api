@@ -132,3 +132,87 @@ func IsTxFailed(err error) bool {
 func ErrorTxFailed(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_TxFailed.String(), fmt.Sprintf(format, args...))
 }
+
+func IsSolana(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_Solana.String() && e.Code == 500
+}
+
+func ErrorSolana(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_Solana.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAssetNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AssetNotFound.String() && e.Code == 500
+}
+
+func ErrorAssetNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_AssetNotFound.String(), fmt.Sprintf(format, args...))
+}
+
+func IsSplClientToken(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_SplClientToken.String() && e.Code == 500
+}
+
+func ErrorSplClientToken(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_SplClientToken.String(), fmt.Sprintf(format, args...))
+}
+
+func IsParsePubkeyError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ParsePubkeyError.String() && e.Code == 500
+}
+
+func ErrorParsePubkeyError(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_ParsePubkeyError.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTryLockError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_TryLockError.String() && e.Code == 500
+}
+
+func ErrorTryLockError(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_TryLockError.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTokenError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_TokenError.String() && e.Code == 500
+}
+
+func ErrorTokenError(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_TokenError.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTonicTransportErr(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_TonicTransportErr.String() && e.Code == 500
+}
+
+func ErrorTonicTransportErr(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_TonicTransportErr.String(), fmt.Sprintf(format, args...))
+}

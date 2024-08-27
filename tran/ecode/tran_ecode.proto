@@ -46,4 +46,6 @@ enum ErrorReason {
   TryLockError = 10012;
 
   TokenError = 10013;
+
+  TonicTransportErr = 10014;
 }

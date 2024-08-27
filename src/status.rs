@@ -20,6 +20,7 @@ use crate::errors::Status;
 pub type Result<T, E = Status> = std::result::Result<T, E>;
 pub use anyhow::Result as AnyResult;
 use tokio::sync::TryLockError;
+use tonic::transport::Error;
 
 impl Status {
     pub fn new(reason: &str, message: &str) -> Status {
@@ -110,6 +111,17 @@ impl From<TryLockError> for Status {
         Status {
             code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
             reason: crate::tran::ecode::ErrorReason::TryLockError.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<tonic::transport::Error> for Status {
+    fn from(value: Error) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::TonicTransportErr.as_str_name().to_string(),
             message: value.to_string(),
             metadata: Default::default(),
         }

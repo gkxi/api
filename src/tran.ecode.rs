@@ -19,6 +19,7 @@ pub enum ErrorReason {
     ParsePubkeyError = 10011,
     TryLockError = 10012,
     TokenError = 10013,
+    TonicTransportErr = 10014,
 }
 impl ErrorReason {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -43,6 +44,7 @@ impl ErrorReason {
             ErrorReason::ParsePubkeyError => "ParsePubkeyError",
             ErrorReason::TryLockError => "TryLockError",
             ErrorReason::TokenError => "TokenError",
+            ErrorReason::TonicTransportErr => "TonicTransportErr",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -64,6 +66,7 @@ impl ErrorReason {
             "ParsePubkeyError" => Some(Self::ParsePubkeyError),
             "TryLockError" => Some(Self::TryLockError),
             "TokenError" => Some(Self::TokenError),
+            "TonicTransportErr" => Some(Self::TonicTransportErr),
             _ => None,
         }
     }
