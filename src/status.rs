@@ -16,7 +16,7 @@ use solana_client::{
 
 use crate::errors::Status;
 
-pub type Result<T, E = Status> = std::result::Result<T, E>
+pub type Result<T, E = Status> = std::result::Result<T, E>;
 pub use anyhow::Result as AnyResult;
 
 impl Status {
