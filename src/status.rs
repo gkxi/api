@@ -13,11 +13,13 @@ use tonic::metadata::MetadataMap;
 use solana_client::{
     client_error::ClientError as SolanaClientError, pubsub_client::PubsubClientError,
 };
+use solana_sdk::pubkey::ParsePubkeyError;
 
 use crate::errors::Status;
 
 pub type Result<T, E = Status> = std::result::Result<T, E>;
 pub use anyhow::Result as AnyResult;
+use tokio::sync::TryLockError;
 
 impl Status {
     pub fn new(reason: &str, message: &str) -> Status {
@@ -86,6 +88,28 @@ impl From<PubsubClientError> for Status {
         Status {
             code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
             reason: "".to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<ParsePubkeyError> for Status {
+    fn from(value: ParsePubkeyError) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::ParsePubkeyError.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<TryLockError> for Status {
+    fn from(value: TryLockError) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::TryLockError.as_str_name().to_string(),
             message: value.to_string(),
             metadata: Default::default(),
         }

@@ -161,6 +161,7 @@ dependencies = [
  "solana-client",
  "solana-sdk",
  "thiserror",
+ "tokio",
  "tonic",
  "tonic-build",
  "validator",

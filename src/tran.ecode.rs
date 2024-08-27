@@ -16,6 +16,9 @@ pub enum ErrorReason {
     Solana = 10008,
     AssetNotFound = 10009,
     SplClientToken = 10010,
+    ParsePubkeyError = 10011,
+    TryLockError = 10012,
+    TokenError = 10013,
 }
 impl ErrorReason {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -37,6 +40,9 @@ impl ErrorReason {
             ErrorReason::Solana => "Solana",
             ErrorReason::AssetNotFound => "AssetNotFound",
             ErrorReason::SplClientToken => "SplClientToken",
+            ErrorReason::ParsePubkeyError => "ParsePubkeyError",
+            ErrorReason::TryLockError => "TryLockError",
+            ErrorReason::TokenError => "TokenError",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -55,6 +61,9 @@ impl ErrorReason {
             "Solana" => Some(Self::Solana),
             "AssetNotFound" => Some(Self::AssetNotFound),
             "SplClientToken" => Some(Self::SplClientToken),
+            "ParsePubkeyError" => Some(Self::ParsePubkeyError),
+            "TryLockError" => Some(Self::TryLockError),
+            "TokenError" => Some(Self::TokenError),
             _ => None,
         }
     }

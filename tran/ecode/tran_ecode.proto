@@ -40,4 +40,10 @@ enum ErrorReason {
   AssetNotFound = 10009;
 
   SplClientToken = 10010;
+
+  ParsePubkeyError = 10011;
+
+  TryLockError = 10012;
+
+  TokenError = 10013;
 }
