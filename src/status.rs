@@ -7,8 +7,13 @@ use axum::{
 };
 use bytes::Bytes;
 use serde_json::json;
-use tonic::Code;
-use tonic::metadata::MetadataMap;
+use tonic::{
+    Code,
+    metadata::MetadataMap,
+    transport::Error,
+};
+use tokio::sync::TryLockError;
+use validator::{ValidationError, ValidationErrors};
 
 use solana_client::{
     client_error::ClientError as SolanaClientError, pubsub_client::PubsubClientError,
@@ -19,8 +24,8 @@ use crate::errors::Status;
 
 pub type Result<T, E = Status> = std::result::Result<T, E>;
 pub use anyhow::Result as AnyResult;
-use tokio::sync::TryLockError;
-use tonic::transport::Error;
+use axum::extract::rejection::{FormRejection, JsonRejection};
+
 
 impl Status {
     pub fn new(reason: &str, message: &str) -> Status {
@@ -122,6 +127,50 @@ impl From<tonic::transport::Error> for Status {
         Status {
             code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
             reason: crate::tran::ecode::ErrorReason::TonicTransportErr.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<ValidationError> for Status {
+    fn from(value: ValidationError) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::ValidationError.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<ValidationErrors> for Status {
+    fn from(value: ValidationErrors) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::ValidationError.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<FormRejection> for Status {
+    fn from(value: FormRejection) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::ValidationError.as_str_name().to_string(),
+            message: value.to_string(),
+            metadata: Default::default(),
+        }
+    }
+}
+
+impl From<JsonRejection> for Status {
+    fn from(value: JsonRejection) -> Self {
+        Status {
+            code: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as i32,
+            reason: crate::tran::ecode::ErrorReason::ValidationError.as_str_name().to_string(),
             message: value.to_string(),
             metadata: Default::default(),
         }

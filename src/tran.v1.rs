@@ -180,6 +180,7 @@ pub struct SendTranRequest {
     #[serde(alias = "privKey")]
     pub priv_key: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, tag = "3")]
+    #[validate(length(min = 1))]
     pub from: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub to: ::prost::alloc::string::String,

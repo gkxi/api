@@ -48,4 +48,6 @@ enum ErrorReason {
   TokenError = 10013;
 
   TonicTransportErr = 10014;
+
+  ValidationError = 10015;
 }
