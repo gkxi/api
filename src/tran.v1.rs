@@ -183,6 +183,7 @@ pub struct SendTranRequest {
     #[validate(length(min = 1))]
     pub from: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
+    #[validate(length(min = 1))]
     pub to: ::prost::alloc::string::String,
     #[prost(string, optional, tag = "5")]
     pub contract_address: ::core::option::Option<::prost::alloc::string::String>,
