@@ -191,7 +191,7 @@ impl Into<tonic::Status> for Status {
 impl IntoResponse for Status {
     fn into_response(self) -> Response {
         let body = Json(json!(self));
-        (StatusCode::from_u16(self.code as u16).unwrap(), body).into_response()
+        (StatusCode::OK, body).into_response()
     }
 }
 
