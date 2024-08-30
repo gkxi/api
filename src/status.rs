@@ -191,7 +191,7 @@ impl Into<tonic::Status> for Status {
 
 impl IntoResponse for Status {
     fn into_response(self) -> Response {
-        let res = SpringResponse::new(false, self.code.to_string(), self.message, "");
+        let res = SpringResponse::new(false, self.reason, self.message, "");
         let body = Json(json!(res));
         (StatusCode::OK, body).into_response()
     }
