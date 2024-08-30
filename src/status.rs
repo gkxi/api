@@ -25,6 +25,7 @@ use crate::errors::Status;
 pub type Result<T, E = Status> = std::result::Result<T, E>;
 pub use anyhow::Result as AnyResult;
 use axum::extract::rejection::{FormRejection, JsonRejection};
+use crate::spring::SpringResponse;
 
 
 impl Status {
@@ -190,7 +191,8 @@ impl Into<tonic::Status> for Status {
 
 impl IntoResponse for Status {
     fn into_response(self) -> Response {
-        let body = Json(json!(self));
+        let res = SpringResponse::new(false, self.code.to_string(), self.message, "");
+        let body = Json(json!(res));
         (StatusCode::OK, body).into_response()
     }
 }
