@@ -25,7 +25,6 @@
 ///     produces: "application/json";
 ///   };
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Swagger {
     /// Specifies the OpenAPI Specification version being used. It can be
@@ -116,7 +115,6 @@ pub struct Swagger {
 ///       };
 ///     }
 ///   }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Operation {
     /// A list of tags for API documentation control. Tags can be used for logical
@@ -180,7 +178,6 @@ pub struct Operation {
 ///
 /// See: <https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#headerObject>
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Header {
     /// `Description` is a short description of the header.
@@ -205,7 +202,6 @@ pub struct Header {
 ///
 /// See: <https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#responseObject>
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Response {
     /// `Description` is a short description of the response.
@@ -258,7 +254,6 @@ pub struct Response {
 ///     ...
 ///   };
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Info {
     /// The title of the application.
@@ -306,7 +301,6 @@ pub struct Info {
 ///     ...
 ///   };
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Contact {
     /// The identifying name of the contact person/organization.
@@ -339,7 +333,6 @@ pub struct Contact {
 ///     ...
 ///   };
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct License {
     /// The license name used for the API.
@@ -365,7 +358,6 @@ pub struct License {
 ///     ...
 ///   };
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExternalDocumentation {
     /// A short description of the target documentation. GFM syntax can be used for
@@ -381,7 +373,6 @@ pub struct ExternalDocumentation {
 ///
 /// See: <https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#schemaObject>
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Schema {
     #[prost(message, optional, tag = "1")]
@@ -436,7 +427,6 @@ pub struct Schema {
 ///         }];
 ///   }
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JsonSchema {
     /// Ref is used to define an external reference to include in the message.
@@ -567,7 +557,6 @@ pub mod json_schema {
 ///
 /// See: <https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#tagObject>
 ///
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Tag {
     /// A short description for the tag. GFM syntax can be used for rich text
@@ -586,7 +575,6 @@ pub struct Tag {
 /// A declaration of the security schemes available to be used in the
 /// specification. This does not enforce the security schemes on the operations
 /// and only serves to provide the relevant details for each scheme.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SecurityDefinitions {
     /// A single security scheme definition, mapping a "name" to the scheme it
@@ -606,7 +594,6 @@ pub struct SecurityDefinitions {
 /// operations. Supported schemes are basic authentication, an API key (either as
 /// a header or as a query parameter) and OAuth2's common flows (implicit,
 /// password, application and access code).
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SecurityScheme {
     /// The type of the security scheme. Valid values are "basic",
@@ -795,7 +782,6 @@ pub mod security_scheme {
 ///
 /// The name used for each property MUST correspond to a security scheme
 /// declared in the Security Definitions.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SecurityRequirement {
     /// Each name must correspond to a security scheme which is declared in
@@ -813,7 +799,6 @@ pub mod security_requirement {
     /// If the security scheme is of type "oauth2", then the value is a list of
     /// scope names required for the execution. For other security scheme types,
     /// the array MUST be empty.
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SecurityRequirementValue {
         #[prost(string, repeated, tag = "1")]
@@ -825,7 +810,6 @@ pub mod security_requirement {
 /// See: <https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/2.0.md#scopesObject>
 ///
 /// Lists the available scopes for an OAuth2 security scheme.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Scopes {
     /// Maps between a name of a scope to a short description of it (as the value
